@@ -16,9 +16,8 @@ pub fn derive_vcard_body(input: TokenStream) -> TokenStream {
             if let Fields::Named(name_fields) = s.fields {
                 let arr_name = name_fields.named;
                 insert_tokens.push(quote! {
-                    content.push_str("VERSION:");
-                    content.push_str(Self::version());
-                    content.push_str("\n");
+                    let version = format!("VERSION:{}\n", Self::version());
+                    content.push_str(&version);
                 });
                 for n in arr_name {
                     let field = n.ident.unwrap();

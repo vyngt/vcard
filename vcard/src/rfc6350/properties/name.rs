@@ -53,3 +53,32 @@ impl VCardProperty for FullName {
         format!("FN:{}\n", &self.value)
     }
 }
+
+/// Noted
+pub struct NickName {
+    value: Vec<String>,
+}
+
+impl NickName {
+    pub fn new() -> Self {
+        Self { value: Vec::new() }
+    }
+
+    pub fn set(&mut self, nicknames: Vec<&str>) {
+        self.value.clear();
+        for nickname in nicknames {
+            self.value.push(nickname.to_string());
+        }
+    }
+}
+
+impl VCardProperty for NickName {
+    fn to_content(&self) -> String {
+        if self.value.len() > 0 {
+            let nicknames = self.value.clone().join(",");
+            format!("NICKNAME:{nicknames}\n")
+        } else {
+            format!("")
+        }
+    }
+}
