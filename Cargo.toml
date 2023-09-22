@@ -2,5 +2,6 @@
 members = [
     "vcard",
     "vcard_derive",
+    "test_suite",
 ]
 resolver = "2"

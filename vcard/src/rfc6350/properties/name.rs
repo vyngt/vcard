@@ -6,9 +6,7 @@ pub struct Name {
 
 impl Name {
     pub fn new() -> Self {
-        Name {
-            value: String::from(";;;;"),
-        }
+        Name { value: "".into() }
     }
 
     pub fn set(
@@ -28,6 +26,9 @@ impl Name {
 
 impl VCardProperty for Name {
     fn to_content(&self) -> String {
+        if self.value.len() == 0 {
+            panic!("Name required!")
+        }
         format!("N:{}\n", &self.value)
     }
 }
@@ -50,7 +51,11 @@ impl FullName {
 
 impl VCardProperty for FullName {
     fn to_content(&self) -> String {
-        format!("FN:{}\n", &self.value)
+        if self.value.len() > 0 {
+            format!("FN:{}\n", &self.value)
+        } else {
+            "".into()
+        }
     }
 }
 

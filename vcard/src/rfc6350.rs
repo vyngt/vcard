@@ -12,7 +12,7 @@ pub struct VCard40 {
 }
 
 impl VCard40 {
-    fn version() -> &'static str {
+    pub fn version() -> &'static str {
         "4.0"
     }
 }
