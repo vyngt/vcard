@@ -7,5 +7,6 @@
     "FBURL",
     "IMPP",
     "PRODID"
-  ]
+  ],
+  "rust-analyzer.showUnlinkedFileNotification": false
 }

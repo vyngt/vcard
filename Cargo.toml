@@ -2,6 +2,5 @@
 members = [
     "vcard",
     "vcard_derive",
-    "playground"
 ]
 resolver = "2"
