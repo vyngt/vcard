@@ -38,5 +38,5 @@ pub mod gender;
 pub mod name;
 pub mod photo;
 
-pub use gender::Gender;
-pub use name::{FullName, Name, NickName};
+pub use gender::GenderProperty;
+pub use name::{FullNameProperty, NameProperty, NickNameProperty};

@@ -9,13 +9,13 @@ pub enum IGender {
     Unknown,
 }
 
-pub struct Gender {
+pub struct GenderProperty {
     value: String,
 }
 
-impl Gender {
+impl GenderProperty {
     pub fn new() -> Self {
-        Gender { value: "".into() }
+        GenderProperty { value: "".into() }
     }
 
     pub fn set(&mut self, gender: IGender) {
@@ -30,7 +30,7 @@ impl Gender {
     }
 }
 
-impl VCardProperty for Gender {
+impl VCardProperty for GenderProperty {
     fn to_content(&self) -> String {
         if self.value.len() > 0 {
             format!("GENDER:{}\n", &self.value)

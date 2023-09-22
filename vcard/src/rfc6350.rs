@@ -1,17 +1,18 @@
 pub mod properties;
+pub mod values;
 
 use std::fs;
 use std::path::Path;
 
 use crate::common::VCardProperty;
-use properties::{FullName, Gender, Name, NickName};
+use properties::{FullNameProperty, GenderProperty, NameProperty, NickNameProperty};
 
 #[derive(vcard_derive::VCard)]
 pub struct VCard40 {
-    pub full_names: FullName,
-    pub name: Name,
-    pub nicknames: NickName,
-    pub gender: Gender,
+    pub full_names: FullNameProperty,
+    pub name: NameProperty,
+    pub nicknames: NickNameProperty,
+    pub gender: GenderProperty,
 }
 
 impl VCard40 {

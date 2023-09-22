@@ -1,12 +1,12 @@
 use crate::common::VCardProperty;
 
-pub struct Name {
+pub struct NameProperty {
     value: String,
 }
 
-impl Name {
+impl NameProperty {
     pub fn new() -> Self {
-        Name { value: "".into() }
+        NameProperty { value: "".into() }
     }
 
     pub fn set(
@@ -24,7 +24,7 @@ impl Name {
     }
 }
 
-impl VCardProperty for Name {
+impl VCardProperty for NameProperty {
     fn to_content(&self) -> String {
         if self.value.len() == 0 {
             "".into()
@@ -34,11 +34,11 @@ impl VCardProperty for Name {
     }
 }
 
-pub struct FullName {
+pub struct FullNameProperty {
     full_names: Vec<String>,
 }
 
-impl FullName {
+impl FullNameProperty {
     pub fn new() -> Self {
         Self { full_names: vec![] }
     }
@@ -48,7 +48,7 @@ impl FullName {
     }
 }
 
-impl VCardProperty for FullName {
+impl VCardProperty for FullNameProperty {
     fn to_content(&self) -> String {
         let mut output = String::from("");
         for full_name in &self.full_names {
@@ -65,11 +65,11 @@ impl VCardProperty for FullName {
 }
 
 /// Noted
-pub struct NickName {
+pub struct NickNameProperty {
     value: Vec<String>,
 }
 
-impl NickName {
+impl NickNameProperty {
     pub fn new() -> Self {
         Self { value: Vec::new() }
     }
@@ -82,7 +82,7 @@ impl NickName {
     }
 }
 
-impl VCardProperty for NickName {
+impl VCardProperty for NickNameProperty {
     fn to_content(&self) -> String {
         if self.value.len() > 0 {
             let nicknames = self.value.clone().join(",");
