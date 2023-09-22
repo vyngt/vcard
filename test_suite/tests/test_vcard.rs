@@ -6,7 +6,7 @@ fn vcard_version_4() {
 }
 
 #[test]
-#[should_panic(expected = "Name required!")]
+#[should_panic(expected = "FullName(FN) Required!")]
 fn required_name() {
     let vc = VCard40::new();
     vc.generate_vcard();
@@ -16,7 +16,11 @@ fn required_name() {
 fn simple_vcard() {
     let mut vc = VCard40::new();
     vc.name.set("Vy", "", "", "", "");
+    vc.full_names.add("Nguyen The Vy");
     let result = vc.generate_vcard();
 
-    assert_eq!(result, "BEGIN:VCARD\nVERSION:4.0\nN:;Vy;;;\nEND:VCARD");
+    assert_eq!(
+        result,
+        "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nN:;Vy;;;\nEND:VCARD"
+    );
 }

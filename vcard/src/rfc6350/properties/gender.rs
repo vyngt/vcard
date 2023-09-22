@@ -1,11 +1,12 @@
 use crate::common::VCardProperty;
 
 pub enum IGender {
+    None,
     Male,
     Female,
     Other,
+    NotApplicable,
     Unknown,
-    NotFill,
 }
 
 pub struct Gender {
@@ -19,11 +20,12 @@ impl Gender {
 
     pub fn set(&mut self, gender: IGender) {
         self.value = match gender {
+            IGender::None => "".into(),
             IGender::Male => "M".into(),
             IGender::Female => "F".into(),
             IGender::Other => "O".into(),
+            IGender::NotApplicable => "N".into(),
             IGender::Unknown => "U".into(),
-            IGender::NotFill => "".into(),
         }
     }
 }

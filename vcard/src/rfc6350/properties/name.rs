@@ -27,35 +27,40 @@ impl Name {
 impl VCardProperty for Name {
     fn to_content(&self) -> String {
         if self.value.len() == 0 {
-            panic!("Name required!")
+            "".into()
+        } else {
+            format!("N:{}\n", &self.value)
         }
-        format!("N:{}\n", &self.value)
     }
 }
 
 pub struct FullName {
-    value: String,
+    full_names: Vec<String>,
 }
 
 impl FullName {
     pub fn new() -> Self {
-        Self {
-            value: String::from(""),
-        }
+        Self { full_names: vec![] }
     }
 
-    pub fn set(&mut self, full_name: &str) {
-        self.value = format!("{}", full_name);
+    pub fn add(&mut self, full_name: &str) {
+        self.full_names.push(full_name.to_string());
     }
 }
 
 impl VCardProperty for FullName {
     fn to_content(&self) -> String {
-        if self.value.len() > 0 {
-            format!("FN:{}\n", &self.value)
-        } else {
-            "".into()
+        let mut output = String::from("");
+        for full_name in &self.full_names {
+            let x = full_name.to_string();
+            output.push_str(&format!("FN:{x}\n"));
         }
+
+        if output.len() < 1 {
+            panic!("FullName(FN) Required!")
+        }
+
+        output
     }
 }
 
