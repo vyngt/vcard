@@ -42,3 +42,19 @@ fn vcard_with_gender() {
         "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nGENDER:M\nEND:VCARD"
     );
 }
+
+#[test]
+fn vcard_with_urls() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new("Nguyen The Vy");
+    vc.full_names.push(fname);
+    vc.urls.push_url("https://github.com/vyngt");
+    vc.urls.push_url("https://leetcode.com/vyngt");
+
+    let result = vc.generate_vcard();
+
+    assert_eq!(
+        result,
+        "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nURL:https://github.com/vyngt\nURL:https://leetcode.com/vyngt\nEND:VCARD"
+    );
+}

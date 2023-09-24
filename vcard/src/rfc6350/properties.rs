@@ -39,9 +39,11 @@ pub mod gender;
 pub mod name;
 pub mod nickname;
 pub mod photo;
+pub mod url;
 
 pub use full_name::FullNameProperty;
 pub use gender::GenderProperty;
 pub use name::NameProperty;
 pub use nickname::NickNameProperty;
 pub use photo::PhotoProperty;
+pub use url::URLProperty;
