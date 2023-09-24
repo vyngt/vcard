@@ -2,7 +2,7 @@ extern crate proc_macro;
 
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{parse_macro_input, Data, DeriveInput, Fields};
+use syn::{parse_macro_input, Data, DeriveInput, Fields, LitStr};
 
 #[proc_macro_derive(VCard)]
 pub fn derive_vcard_body(input: TokenStream) -> TokenStream {
@@ -62,4 +62,29 @@ pub fn derive_vcard_body(input: TokenStream) -> TokenStream {
     };
 
     proc_macro::TokenStream::from(tokens)
+}
+
+#[proc_macro_attribute]
+pub fn vcard_property_type(meta: TokenStream, item: TokenStream) -> TokenStream {
+    let original: DeriveInput = parse_macro_input!(item);
+
+    let parsed_item: DeriveInput = original.clone();
+    let struct_name = parsed_item.ident;
+
+    let vc_property_type = parse_macro_input!(meta as LitStr);
+
+    let next = quote! {
+        impl #struct_name {
+            pub fn get_value_type() -> String {
+                format!("{}", #vc_property_type)
+            }
+        }
+    };
+
+    let output = quote! {
+        #original
+        #next
+    };
+
+    proc_macro::TokenStream::from(output)
 }

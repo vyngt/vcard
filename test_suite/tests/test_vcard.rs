@@ -1,3 +1,4 @@
+use vcard::rfc6350::values::{FullName, IGender};
 use vcard::rfc6350::VCard40;
 
 #[test]
@@ -16,11 +17,28 @@ fn required_name() {
 fn simple_vcard() {
     let mut vc = VCard40::new();
     vc.name.set("Vy", "", "", "", "");
-    vc.full_names.add("Nguyen The Vy");
+
+    let fname = FullName::new("Nguyen The Vy");
+    vc.full_names.push(fname);
     let result = vc.generate_vcard();
 
     assert_eq!(
         result,
         "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nN:;Vy;;;\nEND:VCARD"
+    );
+}
+
+#[test]
+fn vcard_with_gender() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new("Nguyen The Vy");
+    vc.full_names.push(fname);
+    vc.gender.set(IGender::Male);
+
+    let result = vc.generate_vcard();
+
+    assert_eq!(
+        result,
+        "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nGENDER:M\nEND:VCARD"
     );
 }
