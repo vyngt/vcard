@@ -37,7 +37,8 @@ impl VCardValue for Birthday {
             format!(
                 "{}:{}\n",
                 Self::get_value_type(),
-                DateTimeFormatter::fmt_date(self.year, self.month, self.day).expect("Invalid Date")
+                DateTimeFormatter::fmt_date(self.year, self.month, self.day)
+                    .expect("Invalid Date!")
             )
         }
     }

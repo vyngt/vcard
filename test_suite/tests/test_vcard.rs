@@ -84,3 +84,14 @@ fn vcard_with_birthday_error() {
 
     vc.generate_vcard();
 }
+
+#[test]
+#[should_panic(expected = "Invalid Date!")]
+fn vcard_with_birthday_error_2() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new("Nguyen The Vy");
+    vc.full_names.push(fname);
+    vc.birthday.set(2000, 13, 35);
+
+    vc.generate_vcard();
+}
