@@ -16,7 +16,7 @@ impl NickName {
         }
     }
 
-    pub fn add_nickname(mut self, nickname: &str) -> NickName {
+    pub fn add_nickname(mut self, nickname: &str) -> Self {
         let trimmed = nickname.trim();
         if trimmed.len() > 0 {
             self.values.push(trimmed.into());
@@ -24,7 +24,7 @@ impl NickName {
         self
     }
 
-    pub fn add_type(mut self, vc_type: VCardType) -> NickName {
+    pub fn add_type(mut self, vc_type: VCardType) -> Self {
         self.types.push(vc_type);
         self
     }
