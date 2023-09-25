@@ -58,3 +58,29 @@ fn vcard_with_urls() {
         "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nURL:https://github.com/vyngt\nURL:https://leetcode.com/vyngt\nEND:VCARD"
     );
 }
+
+#[test]
+fn vcard_with_birthday() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new("Nguyen The Vy");
+    vc.full_names.push(fname);
+    vc.birthday.set(2000, 4, 3);
+
+    let result = vc.generate_vcard();
+
+    assert_eq!(
+        result,
+        "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nBDAY:20000403\nEND:VCARD"
+    );
+}
+
+#[test]
+#[should_panic(expected = "Invalid Date!")]
+fn vcard_with_birthday_error() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new("Nguyen The Vy");
+    vc.full_names.push(fname);
+    vc.birthday.set(2000, 0, 3);
+
+    vc.generate_vcard();
+}

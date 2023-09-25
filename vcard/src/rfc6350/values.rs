@@ -6,6 +6,7 @@ pub mod nickname;
 pub mod photo;
 pub mod url;
 
+pub use birthday::Birthday;
 pub use full_name::FullName;
 pub use gender::{Gender, IGender};
 pub use name::Name;
