@@ -4,3 +4,6 @@
 /sample
 
 /playground
+
+*.env
+*.profraw
