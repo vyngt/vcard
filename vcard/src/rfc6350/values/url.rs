@@ -3,18 +3,18 @@ use vcard_derive::vcard_property_type;
 
 #[vcard_property_type("URL")]
 pub struct URL {
-    url: String,
+    value: String,
 }
 
 impl URL {
     pub fn new(url: &str) -> Self {
-        URL { url: url.into() }
+        URL { value: url.into() }
     }
 }
 
 impl VCardValue for URL {
     fn format_value(&self) -> String {
-        let trimmed = self.url.trim();
+        let trimmed = self.value.trim();
         if trimmed.len() > 0 {
             format!("{}:{}\n", Self::get_value_type(), trimmed)
         } else {

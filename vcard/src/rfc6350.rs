@@ -1,10 +1,5 @@
-/// Property Parameter
 pub mod parameters;
-
-/// Properties
 pub mod properties;
-
-/// Values
 pub mod values;
 
 use std::fs;
