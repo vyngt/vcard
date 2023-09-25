@@ -9,6 +9,7 @@ grcov . -s . --binary-path ./target/debug/ -t html --branch --ignore-not-existin
 
 # Cleanup
 rm *.profraw; rm **/*.profraw
+$env:RUSTFLAGS=""
 
 # Display
 echo "Output: ./target/debug/coverage/"

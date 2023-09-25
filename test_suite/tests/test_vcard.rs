@@ -1,4 +1,5 @@
-use vcard::rfc6350::values::{FullName, IGender};
+use vcard::rfc6350::parameters::{BaseVCType, VCardType};
+use vcard::rfc6350::values::{FullName, IGender, NickName};
 use vcard::rfc6350::VCard40;
 
 #[test]
@@ -17,9 +18,12 @@ fn required_name() {
 fn simple_vcard() {
     let mut vc = VCard40::new();
     vc.name.set("Vy", "", "", "", "");
+    vc.nicknames.push(NickName::new()); // Empty
 
     let fname = FullName::new("Nguyen The Vy");
     vc.full_names.push(fname);
+    let fname2 = FullName::new(""); // Empty
+    vc.full_names.push(fname2);
     let result = vc.generate_vcard();
 
     assert_eq!(
@@ -94,4 +98,25 @@ fn vcard_with_birthday_error_2() {
     vc.birthday.set(2000, 13, 35);
 
     vc.generate_vcard();
+}
+
+#[test]
+fn vcard_with_nicknames() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new("Nguyen The Vy");
+    vc.full_names.push(fname);
+    vc.nicknames.push(
+        NickName::new()
+            .add_nickname("TheVy")
+            .add_nickname("Developer")
+            .add_nickname("")
+            .add_type(VCardType::Base(BaseVCType::HOME))
+            .add_type(VCardType::Base(BaseVCType::WORK)),
+    );
+    let result = vc.generate_vcard();
+
+    assert_eq!(
+        result,
+        "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nNICKNAME;TYPE=\"HOME,WORK\":TheVy,Developer\nEND:VCARD"
+    );
 }

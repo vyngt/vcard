@@ -10,7 +10,7 @@ fn vcard_type_params() {
     types.push_x_name("cus tom");
 
     let result = types.to_value();
-    assert_eq!(result, "HOME,CELL,INTERNET,CUSTOM");
+    assert_eq!(result, ";TYPE=\"HOME,CELL,INTERNET,CUSTOM\"");
 }
 
 #[test]

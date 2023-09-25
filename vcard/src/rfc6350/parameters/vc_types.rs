@@ -1,4 +1,5 @@
 use std::fmt;
+use vcard_derive::vcard_property_type;
 
 /// ref: https://www.rfc-editor.org/rfc/rfc6350#section-5.6
 #[derive(Debug)]
@@ -79,6 +80,7 @@ impl VCTypeParam {
     }
 }
 
+#[vcard_property_type("TYPE")]
 pub struct VCardTypeParams {
     types: Vec<VCTypeParam>,
 }
@@ -114,6 +116,10 @@ impl VCardTypeParams {
                 out.push_str(&format!(",{}", value));
             }
         }
-        out
+        if out.len() > 0 {
+            format!(";{}=\"{}\"", Self::get_value_type(), out)
+        } else {
+            "".into()
+        }
     }
 }
