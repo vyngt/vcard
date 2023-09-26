@@ -35,7 +35,6 @@ impl fmt::Display for TelType {
 }
 
 /// ref: `https://www.rfc-editor.org/rfc/rfc6350#section-5.6`
-#[derive(Debug)]
 pub enum VCardType {
     Base(BaseType),
     Tel(TelType),

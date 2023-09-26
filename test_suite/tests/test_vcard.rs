@@ -19,23 +19,30 @@ fn simple_vcard() {
     let mut vc = VCard40::new();
     vc.name.set("Vy", "", "", "", "");
     vc.nicknames.push(NickName::new()); // Empty
+    vc.full_names.push(
+        FullName::new()
+            .set_value("Nguyen The Vy")
+            .set_language(Some("vi".into())),
+    );
+    vc.full_names.push(FullName::new());
 
-    let fname = FullName::new("Nguyen The Vy");
-    vc.full_names.push(fname);
-    let fname2 = FullName::new(""); // Empty
-    vc.full_names.push(fname2);
     let result = vc.generate_vcard();
 
     assert_eq!(
         result,
-        "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nN:;Vy;;;\nEND:VCARD"
+        "BEGIN:VCARD\n\
+        VERSION:4.0\n\
+        FN;LANGUAGE=vi:Nguyen The Vy\n\
+        N:;Vy;;;\n\
+        END:VCARD"
     );
 }
 
 #[test]
 fn vcard_with_gender() {
     let mut vc = VCard40::new();
-    let fname = FullName::new("Nguyen The Vy");
+    let fname = FullName::new().set_value("Nguyen The Vy");
+
     vc.full_names.push(fname);
     vc.gender.set(IGender::Male);
 
@@ -50,7 +57,8 @@ fn vcard_with_gender() {
 #[test]
 fn vcard_with_urls() {
     let mut vc = VCard40::new();
-    let fname = FullName::new("Nguyen The Vy");
+    let fname = FullName::new().set_value("Nguyen The Vy");
+
     vc.full_names.push(fname);
     vc.urls.push_url("https://github.com/vyngt");
     vc.urls.push_url("https://leetcode.com/vyngt");
@@ -66,7 +74,8 @@ fn vcard_with_urls() {
 #[test]
 fn vcard_with_birthday() {
     let mut vc = VCard40::new();
-    let fname = FullName::new("Nguyen The Vy");
+    let fname = FullName::new().set_value("Nguyen The Vy");
+
     vc.full_names.push(fname);
     vc.birthday.set(2000, 4, 3);
 
@@ -82,7 +91,8 @@ fn vcard_with_birthday() {
 #[should_panic(expected = "Invalid Date!")]
 fn vcard_with_birthday_error() {
     let mut vc = VCard40::new();
-    let fname = FullName::new("Nguyen The Vy");
+    let fname = FullName::new().set_value("Nguyen The Vy");
+
     vc.full_names.push(fname);
     vc.birthday.set(2000, 0, 3);
 
@@ -93,7 +103,8 @@ fn vcard_with_birthday_error() {
 #[should_panic(expected = "Invalid Date!")]
 fn vcard_with_birthday_error_2() {
     let mut vc = VCard40::new();
-    let fname = FullName::new("Nguyen The Vy");
+    let fname = FullName::new().set_value("Nguyen The Vy");
+
     vc.full_names.push(fname);
     vc.birthday.set(2000, 13, 35);
 
@@ -103,7 +114,7 @@ fn vcard_with_birthday_error_2() {
 #[test]
 fn vcard_with_nicknames() {
     let mut vc = VCard40::new();
-    let fname = FullName::new("Nguyen The Vy");
+    let fname = FullName::new().set_value("Nguyen The Vy");
     vc.full_names.push(fname);
     vc.nicknames.push(
         NickName::new()
@@ -124,7 +135,7 @@ fn vcard_with_nicknames() {
 #[test]
 fn vcard_with_nicknames_language() {
     let mut vc = VCard40::new();
-    let fname = FullName::new("Nguyen The Vy");
+    let fname = FullName::new().set_value("Nguyen The Vy");
     vc.full_names.push(fname);
     vc.nicknames.push(
         NickName::new()
