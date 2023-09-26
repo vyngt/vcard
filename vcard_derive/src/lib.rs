@@ -88,8 +88,3 @@ pub fn vcard_property_type(meta: TokenStream, item: TokenStream) -> TokenStream 
 
     proc_macro::TokenStream::from(output)
 }
-
-// #[proc_macro_derive(VCardValue, attributes(value))]
-// pub fn derive_vcard_value(input: TokenStream) -> TokenStream {
-//     TokenStream::new()
-// }

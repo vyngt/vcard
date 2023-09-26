@@ -1,18 +1,18 @@
-use super::super::parameters::{VCardType, VCardTypeParams};
-use crate::common::VCardValue;
+use super::super::parameters::{TypeParam, VCardType};
+use crate::common::{VCardParam, VCardValue};
 use vcard_derive::vcard_property_type;
 
 #[vcard_property_type("NICKNAME")]
 pub struct NickName {
     values: Vec<String>,
-    types: VCardTypeParams,
+    type_param: TypeParam,
 }
 
 impl NickName {
     pub fn new() -> Self {
         Self {
             values: Vec::new(),
-            types: VCardTypeParams::new(),
+            type_param: TypeParam::new(),
         }
     }
 
@@ -25,7 +25,7 @@ impl NickName {
     }
 
     pub fn add_type(mut self, vc_type: VCardType) -> Self {
-        self.types.push(vc_type);
+        self.type_param.push(vc_type);
         self
     }
 }
@@ -36,8 +36,13 @@ impl VCardValue for NickName {
             "".into()
         } else {
             let nicknames = self.values.join(",");
-            let types = self.types.to_value();
-            format!("{}{}:{}\n", Self::get_value_type(), types, nicknames)
+            let type_param_str = self.type_param.format_param();
+            format!(
+                "{}{}:{}\n",
+                Self::get_value_type(),
+                type_param_str,
+                nicknames
+            )
         }
     }
 }

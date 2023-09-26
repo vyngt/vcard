@@ -5,3 +5,7 @@ pub trait VCardProperty {
 pub trait VCardValue {
     fn format_value(&self) -> String;
 }
+
+pub trait VCardParam {
+    fn format_param(&self) -> String;
+}

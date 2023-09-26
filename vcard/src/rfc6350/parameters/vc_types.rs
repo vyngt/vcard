@@ -1,23 +1,24 @@
+use crate::common::VCardParam;
 use std::fmt;
 use vcard_derive::vcard_property_type;
 
-/// ref: https://www.rfc-editor.org/rfc/rfc6350#section-5.6
+/// ref: `https://www.rfc-editor.org/rfc/rfc6350#section-5.6`
 #[derive(Debug)]
-pub enum BaseVCType {
+pub enum BaseType {
     WORK,
     HOME,
 }
 
-impl fmt::Display for BaseVCType {
+impl fmt::Display for BaseType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{:?}", self)
     }
 }
-/// ref: https://www.rfc-editor.org/rfc/rfc6350#section-6.4.1
+/// ref: `https://www.rfc-editor.org/rfc/rfc6350#section-6.4.1`
 ///
 /// MUST NOT be used with a property other than TEL.
 #[derive(Debug)]
-pub enum TelVCType {
+pub enum TelType {
     TEXT,
     VOICE,
     FAX,
@@ -27,17 +28,17 @@ pub enum TelVCType {
     TEXTPHONE,
 }
 
-impl fmt::Display for TelVCType {
+impl fmt::Display for TelType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{:?}", self)
     }
 }
 
-/// ref: https://www.rfc-editor.org/rfc/rfc6350#section-5.6
+/// ref: `https://www.rfc-editor.org/rfc/rfc6350#section-5.6`
 #[derive(Debug)]
 pub enum VCardType {
-    Base(BaseVCType),
-    Tel(TelVCType),
+    Base(BaseType),
+    Tel(TelType),
     XName(String),
 }
 
@@ -51,62 +52,42 @@ impl fmt::Display for VCardType {
     }
 }
 
-pub struct VCTypeParam {
-    value: VCardType,
-}
-
-impl VCTypeParam {
-    pub fn new(vc_type: VCardType) -> Self {
-        Self { value: vc_type }
-    }
-
-    pub fn set(&mut self, vc_type: VCardType) {
-        self.value = vc_type;
-    }
-
-    pub fn from_x_name(x_name: &str) -> Self {
-        let mut x = String::new();
-        let m = x_name.split_ascii_whitespace();
-        for s in m {
-            x.push_str(s)
-        }
-        Self {
-            value: VCardType::XName(x.to_uppercase()),
-        }
-    }
-
-    pub fn to_string(&self) -> String {
-        self.value.to_string()
-    }
-}
-
 #[vcard_property_type("TYPE")]
-pub struct VCardTypeParams {
-    types: Vec<VCTypeParam>,
+pub struct TypeParam {
+    types: Vec<VCardType>,
 }
 
-impl VCardTypeParams {
+impl TypeParam {
     pub fn new() -> Self {
         Self { types: vec![] }
     }
 
     pub fn push(&mut self, vc_type: VCardType) {
-        self.types.push(VCTypeParam::new(vc_type))
+        self.types.push(vc_type)
     }
 
-    pub fn push_base(&mut self, base: BaseVCType) {
+    pub fn push_base(&mut self, base: BaseType) {
         self.push(VCardType::Base(base))
     }
 
-    pub fn push_tel(&mut self, tel: TelVCType) {
+    pub fn push_tel(&mut self, tel: TelType) {
         self.push(VCardType::Tel(tel))
     }
 
     pub fn push_x_name(&mut self, x_name: &str) {
-        self.types.push(VCTypeParam::from_x_name(x_name));
+        let mut x = String::new();
+        let m = x_name.split_ascii_whitespace();
+        for s in m {
+            x.push_str(s)
+        }
+        if x.len() > 0 {
+            self.types.push(VCardType::XName(x.to_uppercase()));
+        }
     }
+}
 
-    pub fn to_value(&self) -> String {
+impl VCardParam for TypeParam {
+    fn format_param(&self) -> String {
         let mut out = String::from("");
         for i in 0..self.types.len() {
             let value = &self.types[i].to_string();

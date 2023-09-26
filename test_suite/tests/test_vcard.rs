@@ -1,4 +1,4 @@
-use vcard::rfc6350::parameters::{BaseVCType, VCardType};
+use vcard::rfc6350::parameters::{BaseType, VCardType};
 use vcard::rfc6350::values::{FullName, IGender, NickName};
 use vcard::rfc6350::VCard40;
 
@@ -110,8 +110,8 @@ fn vcard_with_nicknames() {
             .add_nickname("TheVy")
             .add_nickname("Developer")
             .add_nickname("")
-            .add_type(VCardType::Base(BaseVCType::HOME))
-            .add_type(VCardType::Base(BaseVCType::WORK)),
+            .add_type(VCardType::Base(BaseType::HOME))
+            .add_type(VCardType::Base(BaseType::WORK)),
     );
     let result = vc.generate_vcard();
 
