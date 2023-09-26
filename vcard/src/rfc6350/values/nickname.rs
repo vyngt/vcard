@@ -1,4 +1,4 @@
-use super::super::parameters::{LanguageParam, TypeParam, VCardType};
+use super::super::parameters::{LanguageParam, PrefParam, TypeParam, VCardType};
 use crate::common::{VCardParam, VCardValue};
 use vcard_derive::vcard_property_type;
 
@@ -7,6 +7,7 @@ pub struct NickName {
     values: Vec<String>,
     type_param: TypeParam,
     lang_param: LanguageParam,
+    pref_param: PrefParam,
 }
 
 impl NickName {
@@ -15,6 +16,7 @@ impl NickName {
             values: Vec::new(),
             type_param: TypeParam::new(),
             lang_param: LanguageParam::new(),
+            pref_param: PrefParam::new(),
         }
     }
 
@@ -36,6 +38,11 @@ impl NickName {
         self.lang_param.set(lang);
         self
     }
+
+    pub fn set_prefer(mut self, preferred: u8) -> Self {
+        self.pref_param.set(preferred).unwrap();
+        self
+    }
 }
 
 impl VCardValue for NickName {
@@ -45,8 +52,9 @@ impl VCardValue for NickName {
         } else {
             let nicknames = self.values.join(",");
             format!(
-                "{}{}{}:{}\n",
+                "{}{}{}{}:{}\n",
                 Self::get_value_type(),
+                self.pref_param.format_param(),
                 self.lang_param.format_param(),
                 self.type_param.format_param(),
                 nicknames

@@ -1,4 +1,4 @@
-use super::super::parameters::{LanguageParam, TypeParam, VCardType};
+use super::super::parameters::{LanguageParam, PrefParam, TypeParam, VCardType};
 use crate::common::{VCardParam, VCardValue};
 use vcard_derive::vcard_property_type;
 
@@ -7,6 +7,7 @@ pub struct FullName {
     value: String,
     type_param: TypeParam,
     lang_param: LanguageParam,
+    pref_param: PrefParam,
 }
 
 impl FullName {
@@ -15,6 +16,7 @@ impl FullName {
             value: String::new(),
             type_param: TypeParam::new(),
             lang_param: LanguageParam::new(),
+            pref_param: PrefParam::new(),
         }
     }
 
@@ -36,14 +38,20 @@ impl FullName {
         self.lang_param.set(lang);
         self
     }
+
+    pub fn set_prefer(mut self, preferred: u8) -> Self {
+        self.pref_param.set(preferred).unwrap();
+        self
+    }
 }
 
 impl VCardValue for FullName {
     fn format_value(&self) -> String {
         if self.value.len() > 0 {
             format!(
-                "{}{}{}:{}\n",
+                "{}{}{}{}:{}\n",
                 Self::get_value_type(),
+                self.pref_param.format_param(),
                 self.lang_param.format_param(),
                 self.type_param.format_param(),
                 self.value

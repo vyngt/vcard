@@ -1,4 +1,4 @@
-use super::super::parameters::{TypeParam, VCardType};
+use super::super::parameters::{PrefParam, TypeParam, VCardType};
 use crate::common::{VCardParam, VCardValue};
 use vcard_derive::vcard_property_type;
 
@@ -6,13 +6,15 @@ use vcard_derive::vcard_property_type;
 pub struct URL {
     value: String,
     type_param: TypeParam,
+    pref_param: PrefParam,
 }
 
 impl URL {
     pub fn new() -> Self {
         Self {
-            value: "".into(),
+            value: String::new(),
             type_param: TypeParam::new(),
+            pref_param: PrefParam::new(),
         }
     }
 
@@ -26,6 +28,11 @@ impl URL {
         self.type_param = tp.add(vc_type);
         self
     }
+
+    pub fn set_prefer(mut self, preferred: u8) -> Self {
+        self.pref_param.set(preferred).unwrap();
+        self
+    }
 }
 
 impl VCardValue for URL {
@@ -33,8 +40,9 @@ impl VCardValue for URL {
         let trimmed = self.value.trim();
         if trimmed.len() > 0 {
             format!(
-                "{}{}:{}\n",
+                "{}{}{}:{}\n",
                 Self::get_value_type(),
+                self.pref_param.format_param(),
                 self.type_param.format_param(),
                 trimmed
             )

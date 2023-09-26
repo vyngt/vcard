@@ -1,6 +1,6 @@
 use vcard::{
     common::VCardParam,
-    rfc6350::parameters::{BaseType, LanguageParam, TelType, TypeParam, VCardType},
+    rfc6350::parameters::{BaseType, LanguageParam, PrefParam, TelType, TypeParam, VCardType},
 };
 
 #[test]
@@ -38,4 +38,20 @@ fn language_param() {
     lang.set(Some("vi".into()));
 
     assert_eq!(lang.format_param(), ";LANGUAGE=vi");
+}
+
+#[test]
+fn pref_param() {
+    let mut pref = PrefParam::new();
+    assert_eq!(pref.format_param(), "");
+
+    pref.set(59).unwrap();
+    assert_eq!(pref.format_param(), ";PREF=59");
+}
+
+#[test]
+#[should_panic(expected = "Prefer value condition(x): 1 <= x <= 100")]
+fn pref_param_invalid() {
+    let mut pref = PrefParam::new();
+    pref.set(101).unwrap();
 }
