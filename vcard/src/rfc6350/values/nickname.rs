@@ -27,7 +27,8 @@ impl NickName {
     }
 
     pub fn add_type(mut self, vc_type: VCardType) -> Self {
-        self.type_param.push(vc_type);
+        let tp: TypeParam = self.type_param;
+        self.type_param = tp.add(vc_type);
         self
     }
 

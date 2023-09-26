@@ -1,5 +1,5 @@
 use vcard::rfc6350::parameters::{BaseType, VCardType};
-use vcard::rfc6350::values::{FullName, IGender, NickName};
+use vcard::rfc6350::values::{FullName, IGender, NickName, URL};
 use vcard::rfc6350::VCard40;
 
 #[test]
@@ -60,14 +60,24 @@ fn vcard_with_urls() {
     let fname = FullName::new().set_value("Nguyen The Vy");
 
     vc.full_names.push(fname);
-    vc.urls.push_url("https://github.com/vyngt");
-    vc.urls.push_url("https://leetcode.com/vyngt");
+    vc.urls
+        .push(URL::new().set_value("https://github.com/vyngt"));
+    vc.urls.push(
+        URL::new()
+            .set_value("https://leetcode.com/vyngt")
+            .add_type(VCardType::XName("Leetcode".into())),
+    );
 
     let result = vc.generate_vcard();
 
     assert_eq!(
         result,
-        "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nURL:https://github.com/vyngt\nURL:https://leetcode.com/vyngt\nEND:VCARD"
+        "BEGIN:VCARD\n\
+        VERSION:4.0\n\
+        FN:Nguyen The Vy\n\
+        URL:https://github.com/vyngt\n\
+        URL;TYPE=LEETCODE:https://leetcode.com/vyngt\n\
+        END:VCARD"
     );
 }
 
@@ -120,15 +130,17 @@ fn vcard_with_nicknames() {
         NickName::new()
             .add_nickname("TheVy")
             .add_nickname("Developer")
-            .add_nickname("")
-            .add_type(VCardType::Base(BaseType::HOME))
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_nickname(""),
     );
     let result = vc.generate_vcard();
 
     assert_eq!(
         result,
-        "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nNICKNAME;TYPE=\"HOME,WORK\":TheVy,Developer\nEND:VCARD"
+        "BEGIN:VCARD\n\
+        VERSION:4.0\n\
+        FN:Nguyen The Vy\n\
+        NICKNAME:TheVy,Developer\n\
+        END:VCARD"
     );
 }
 
@@ -142,8 +154,6 @@ fn vcard_with_nicknames_language() {
             .add_nickname("TheVy")
             .add_nickname("Developer")
             .add_nickname("")
-            .add_type(VCardType::Base(BaseType::HOME))
-            .add_type(VCardType::Base(BaseType::WORK))
             .set_language(Some("vi".into())),
     );
     let result = vc.generate_vcard();
@@ -153,7 +163,37 @@ fn vcard_with_nicknames_language() {
         "BEGIN:VCARD\n\
         VERSION:4.0\n\
         FN:Nguyen The Vy\n\
-        NICKNAME;LANGUAGE=vi;TYPE=\"HOME,WORK\":TheVy,Developer\n\
+        NICKNAME;LANGUAGE=vi:TheVy,Developer\n\
+        END:VCARD"
+    );
+}
+
+#[test]
+fn vcard_with_types() {
+    let mut vc = VCard40::new();
+
+    vc.full_names.push(
+        FullName::new()
+            .set_value("Nguyen The Vy")
+            .add_type(VCardType::Base(BaseType::HOME))
+            .add_type(VCardType::XName("dark".into())),
+    );
+    vc.nicknames.push(
+        NickName::new()
+            .add_nickname("TheVy")
+            .add_nickname("Developer")
+            .add_nickname("")
+            .add_type(VCardType::Base(BaseType::HOME))
+            .add_type(VCardType::Base(BaseType::WORK)),
+    );
+    let result = vc.generate_vcard();
+
+    assert_eq!(
+        result,
+        "BEGIN:VCARD\n\
+        VERSION:4.0\n\
+        FN;TYPE=HOME,DARK:Nguyen The Vy\n\
+        NICKNAME;TYPE=HOME,WORK:TheVy,Developer\n\
         END:VCARD"
     );
 }

@@ -41,16 +41,6 @@ pub enum VCardType {
     XName(String),
 }
 
-impl fmt::Display for VCardType {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            VCardType::Base(base) => base.fmt(f),
-            VCardType::Tel(tel) => tel.fmt(f),
-            VCardType::XName(x_name) => write!(f, "{}", x_name),
-        }
-    }
-}
-
 #[vcard_property_type("TYPE")]
 pub struct TypeParam {
     types: Vec<VCardType>,
@@ -61,43 +51,61 @@ impl TypeParam {
         Self { types: vec![] }
     }
 
-    pub fn push(&mut self, vc_type: VCardType) {
-        self.types.push(vc_type)
+    pub fn add(mut self, vc_type: VCardType) -> Self {
+        self.types.push(vc_type);
+        self
     }
 
-    pub fn push_base(&mut self, base: BaseType) {
-        self.push(VCardType::Base(base))
+    pub fn add_base(self, base: BaseType) -> Self {
+        self.add(VCardType::Base(base))
     }
 
-    pub fn push_tel(&mut self, tel: TelType) {
-        self.push(VCardType::Tel(tel))
+    pub fn add_tel(self, tel: TelType) -> Self {
+        self.add(VCardType::Tel(tel))
     }
 
-    pub fn push_x_name(&mut self, x_name: &str) {
+    /// Note
+    pub fn add_x_name(self, x_name: &str) -> Self {
+        match Self::format_x_name(x_name) {
+            Some(xn) => self.add(VCardType::XName(xn.to_uppercase())),
+            None => self,
+        }
+    }
+
+    fn format_x_name(x_name: &str) -> Option<String> {
         let mut x = String::new();
         let m = x_name.split_ascii_whitespace();
         for s in m {
             x.push_str(s)
         }
         if x.len() > 0 {
-            self.types.push(VCardType::XName(x.to_uppercase()));
+            Some(x)
+        } else {
+            None
         }
     }
 }
 
 impl VCardParam for TypeParam {
     fn format_param(&self) -> String {
-        let mut out = String::from("");
+        let mut out = vec![];
         for i in 0..self.types.len() {
-            let value = &self.types[i].to_string();
-            if i == 0 {
-                out.push_str(value);
-            } else {
-                out.push_str(&format!(",{}", value));
+            let type_str = match &self.types[i] {
+                VCardType::Base(base) => base.to_string(),
+                VCardType::Tel(tel) => tel.to_string(),
+                VCardType::XName(xn) => match Self::format_x_name(xn) {
+                    Some(xn) => xn.to_uppercase(),
+                    None => "".into(),
+                },
+            };
+
+            if type_str.len() > 0 {
+                out.push(type_str);
             }
         }
+
         if out.len() > 0 {
-            format!(";{}=\"{}\"", Self::get_value_type(), out)
+            format!(";{}={}", Self::get_value_type(), out.join(","))
         } else {
             "".into()
         }

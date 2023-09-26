@@ -10,8 +10,8 @@ impl URLProperty {
         Self { urls: vec![] }
     }
 
-    pub fn push_url(&mut self, url: &str) {
-        self.urls.push(URL::new(url));
+    pub fn push(&mut self, url: URL) {
+        self.urls.push(url);
     }
 }
 
