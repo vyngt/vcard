@@ -9,4 +9,5 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.31"
+mime = "0.3.17"
 vcard_derive = {path = "../vcard_derive"}
