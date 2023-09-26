@@ -2,9 +2,6 @@
 TODO:
 -----------------
 - PHOTO
-- BDAY
-- ANNIVERSARY
-- GENDER
 - ADR
 - TEL
 - EMAIL
@@ -28,7 +25,6 @@ TODO:
 - SOUND
 - UID
 - CLIENTPIDMAP
-- URL
 ------------------
 - FBURL
 - CALADRURI
@@ -41,6 +37,7 @@ pub mod gender;
 pub mod name;
 pub mod nickname;
 pub mod photo;
+pub mod rev;
 pub mod url;
 
 pub use anniversary::AnniversaryProperty;
@@ -50,4 +47,5 @@ pub use gender::GenderProperty;
 pub use name::NameProperty;
 pub use nickname::NickNameProperty;
 pub use photo::PhotoProperty;
+pub use rev::RevProperty;
 pub use url::URLProperty;

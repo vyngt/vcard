@@ -1,3 +1,4 @@
+use regex::Regex;
 use vcard::rfc6350::parameters::{BaseType, VCardType};
 use vcard::rfc6350::values::{FullName, IGender, NickName, URL};
 use vcard::rfc6350::VCard40;
@@ -237,4 +238,18 @@ fn vcard_with_types() {
         NICKNAME;TYPE=HOME,WORK:TheVy,Developer\n\
         END:VCARD"
     );
+}
+
+#[test]
+fn vcard_with_rev_current() {
+    let mut vc = VCard40::new();
+    vc.full_names
+        .push(FullName::new().set_value("Nguyen The Vy"));
+    vc.rev.update_current();
+    let result = vc.generate_vcard();
+
+    let re = Regex::new(r"BEGIN:VCARD\nVERSION:4\.0\nFN:Nguyen The Vy\nREV:\d{8}T\d{6}\nEND:VCARD")
+        .unwrap();
+
+    assert!(re.is_match(&result))
 }
