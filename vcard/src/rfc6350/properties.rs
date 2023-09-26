@@ -34,6 +34,7 @@ TODO:
 - CALADRURI
 - CALURI
 */
+pub mod anniversary;
 pub mod birthday;
 pub mod full_name;
 pub mod gender;
@@ -42,6 +43,7 @@ pub mod nickname;
 pub mod photo;
 pub mod url;
 
+pub use anniversary::AnniversaryProperty;
 pub use birthday::BirthdayProperty;
 pub use full_name::FullNameProperty;
 pub use gender::GenderProperty;

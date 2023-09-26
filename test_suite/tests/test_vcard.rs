@@ -67,6 +67,7 @@ fn vcard_with_urls() {
             .set_value("https://leetcode.com/vyngt")
             .add_type(VCardType::XName("Leetcode".into())),
     );
+    vc.urls.push(URL::new()); //Empty
 
     let result = vc.generate_vcard();
 
@@ -117,6 +118,46 @@ fn vcard_with_birthday_error_2() {
 
     vc.full_names.push(fname);
     vc.birthday.set(2000, 13, 35);
+
+    vc.generate_vcard();
+}
+
+#[test]
+fn vcard_with_anniversary() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new().set_value("Nguyen The Vy");
+
+    vc.full_names.push(fname);
+    vc.anniversary.set(2023, 12, 12);
+
+    let result = vc.generate_vcard();
+
+    assert_eq!(
+        result,
+        "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nANNIVERSARY:20231212\nEND:VCARD"
+    );
+}
+
+#[test]
+#[should_panic(expected = "Invalid Date!")]
+fn vcard_with_anniversary_error() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new().set_value("Nguyen The Vy");
+
+    vc.full_names.push(fname);
+    vc.anniversary.set(2000, 0, 3);
+
+    vc.generate_vcard();
+}
+
+#[test]
+#[should_panic(expected = "Invalid Date!")]
+fn vcard_with_anniversary_error_2() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new().set_value("Nguyen The Vy");
+
+    vc.full_names.push(fname);
+    vc.anniversary.set(2000, 13, 35);
 
     vc.generate_vcard();
 }
