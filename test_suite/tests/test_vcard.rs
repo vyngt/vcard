@@ -120,3 +120,29 @@ fn vcard_with_nicknames() {
         "BEGIN:VCARD\nVERSION:4.0\nFN:Nguyen The Vy\nNICKNAME;TYPE=\"HOME,WORK\":TheVy,Developer\nEND:VCARD"
     );
 }
+
+#[test]
+fn vcard_with_nicknames_language() {
+    let mut vc = VCard40::new();
+    let fname = FullName::new("Nguyen The Vy");
+    vc.full_names.push(fname);
+    vc.nicknames.push(
+        NickName::new()
+            .add_nickname("TheVy")
+            .add_nickname("Developer")
+            .add_nickname("")
+            .add_type(VCardType::Base(BaseType::HOME))
+            .add_type(VCardType::Base(BaseType::WORK))
+            .set_language(Some("vi".into())),
+    );
+    let result = vc.generate_vcard();
+
+    assert_eq!(
+        result,
+        "BEGIN:VCARD\n\
+        VERSION:4.0\n\
+        FN:Nguyen The Vy\n\
+        NICKNAME;LANGUAGE=vi;TYPE=\"HOME,WORK\":TheVy,Developer\n\
+        END:VCARD"
+    );
+}

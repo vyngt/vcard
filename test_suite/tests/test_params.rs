@@ -1,6 +1,6 @@
 use vcard::{
     common::VCardParam,
-    rfc6350::parameters::{BaseType, TelType, TypeParam},
+    rfc6350::parameters::{BaseType, LanguageParam, TelType, TypeParam},
 };
 
 #[test]
@@ -21,4 +21,19 @@ fn vcard_type_params_empty() {
     let type_param = TypeParam::new();
     let result = type_param.format_param();
     assert_eq!(result, "");
+}
+
+#[test]
+fn language_param_empty() {
+    let lang = LanguageParam::new();
+
+    assert_eq!(lang.format_param(), "");
+}
+
+#[test]
+fn language_param() {
+    let mut lang = LanguageParam::new();
+    lang.set(Some("vi".into()));
+
+    assert_eq!(lang.format_param(), ";LANGUAGE=vi");
 }
