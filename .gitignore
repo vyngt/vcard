@@ -4,6 +4,7 @@
 /sample
 
 /playground
+/scripts
 
 *.env
 *.profraw
