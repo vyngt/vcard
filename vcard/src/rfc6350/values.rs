@@ -1,5 +1,6 @@
 pub mod anniversary;
 pub mod birthday;
+pub mod email;
 pub mod full_name;
 pub mod gender;
 pub mod name;
@@ -10,6 +11,7 @@ pub mod url;
 
 pub use anniversary::Anniversary;
 pub use birthday::Birthday;
+pub use email::Email;
 pub use full_name::FullName;
 pub use gender::{Gender, IGender};
 pub use name::Name;

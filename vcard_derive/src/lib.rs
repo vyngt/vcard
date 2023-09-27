@@ -4,6 +4,9 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, Data, DeriveInput, Fields, LitStr};
 
+// TODO: Extract logic -> To reuse logic
+// fn new() -> Self
+
 #[proc_macro_derive(VCard)]
 pub fn derive_vcard_body(input: TokenStream) -> TokenStream {
     let mut insert_tokens = vec![];

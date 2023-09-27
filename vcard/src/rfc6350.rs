@@ -7,8 +7,8 @@ use std::path::Path;
 
 use crate::common::VCardProperty;
 use properties::{
-    AnniversaryProperty, BirthdayProperty, FullNameProperty, GenderProperty, NameProperty,
-    NickNameProperty, PhotoProperty, RevProperty, URLProperty,
+    AnniversaryProperty, BirthdayProperty, EmailProperty, FullNameProperty, GenderProperty,
+    NameProperty, NickNameProperty, PhotoProperty, RevProperty, URLProperty,
 };
 
 #[derive(vcard_derive::VCard)]
@@ -19,6 +19,7 @@ pub struct VCard40 {
     pub gender: GenderProperty,
     pub birthday: BirthdayProperty,
     pub anniversary: AnniversaryProperty,
+    pub email: EmailProperty,
     pub photos: PhotoProperty,
     pub urls: URLProperty,
     pub rev: RevProperty,

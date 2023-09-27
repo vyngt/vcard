@@ -32,6 +32,7 @@ TODO:
 */
 pub mod anniversary;
 pub mod birthday;
+pub mod email;
 pub mod full_name;
 pub mod gender;
 pub mod name;
@@ -42,6 +43,7 @@ pub mod url;
 
 pub use anniversary::AnniversaryProperty;
 pub use birthday::BirthdayProperty;
+pub use email::EmailProperty;
 pub use full_name::FullNameProperty;
 pub use gender::GenderProperty;
 pub use name::NameProperty;
