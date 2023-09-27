@@ -1,4 +1,5 @@
 use regex::Regex;
+use std::fs;
 use vcard::rfc6350::parameters::{BaseType, VCardType};
 use vcard::rfc6350::values::{FullName, IGender, NickName, URL};
 use vcard::rfc6350::VCard40;
@@ -10,13 +11,13 @@ fn vcard_version_4() {
 
 #[test]
 #[should_panic(expected = "FullName(FN) Required!")]
-fn required_name() {
+fn vcard_required_fn() {
     let vc = VCard40::new();
     vc.generate_vcard();
 }
 
 #[test]
-fn simple_vcard() {
+fn vcard_simple() {
     let mut vc = VCard40::new();
     vc.name.set("Vy", "", "", "", "");
     vc.nicknames.push(NickName::new()); // Empty
@@ -37,6 +38,27 @@ fn simple_vcard() {
         N:;Vy;;;\n\
         END:VCARD"
     );
+}
+
+#[test]
+fn vcard_write_to_file() {
+    let pathname = "../target/tmp/simple_vcard.vcf";
+    let pathname_not_exists = "../target/not_exists/simple_vcard.vcf";
+    let mut vc = VCard40::new();
+    vc.full_names
+        .push(FullName::new().set_value("Nguyen The Vy"));
+
+    let expected = "BEGIN:VCARD\n\
+    VERSION:4.0\n\
+    FN:Nguyen The Vy\n\
+    END:VCARD";
+
+    assert_eq!(vc.write_to_file(pathname), true);
+    assert_eq!(vc.write_to_file(pathname_not_exists), false);
+
+    let vcf_content = fs::read_to_string(pathname).unwrap();
+
+    assert_eq!(vcf_content, expected);
 }
 
 #[test]
