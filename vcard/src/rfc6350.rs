@@ -9,7 +9,7 @@ use crate::common::VCardProperty;
 use properties::{
     AnniversaryProperty, BirthdayProperty, CategoryProperty, EmailProperty, FullNameProperty,
     GenderProperty, LanguageProperty, NameProperty, NickNameProperty, PhotoProperty, RevProperty,
-    RoleProperty, TitleProperty, URLProperty,
+    RoleProperty, TelProperty, TitleProperty, URLProperty,
 };
 
 #[derive(vcard_derive::VCard)]
@@ -22,7 +22,7 @@ pub struct VCard40 {
     pub anniversary: AnniversaryProperty,
     pub gender: GenderProperty,
     // ADR
-    // TEL
+    pub tel: TelProperty,
     pub email: EmailProperty,
     // IMP
     pub language: LanguageProperty,

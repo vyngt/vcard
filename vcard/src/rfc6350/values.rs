@@ -10,6 +10,7 @@ pub mod nickname;
 pub mod photo;
 pub mod rev;
 pub mod role;
+pub mod tel;
 pub mod title;
 pub mod url;
 
@@ -25,5 +26,6 @@ pub use nickname::NickName;
 pub use photo::Photo;
 pub use rev::Rev;
 pub use role::Role;
+pub use tel::Tel;
 pub use title::Title;
 pub use url::URL;

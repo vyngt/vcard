@@ -1,8 +1,10 @@
 use vcard::common::VCardProperty;
 use vcard::rfc6350::{
     parameters::{BaseType, TelType, VCardType},
-    properties::{CategoryProperty, EmailProperty, LanguageProperty, RoleProperty, TitleProperty},
-    values::{Category, Email, Language, Role, Title},
+    properties::{
+        CategoryProperty, EmailProperty, LanguageProperty, RoleProperty, TelProperty, TitleProperty,
+    },
+    values::{Category, Email, Language, Role, Tel, Title},
 };
 
 #[test]
@@ -162,4 +164,34 @@ pub fn categories_prop() {
     CATEGORIES;PREF=50;TYPE=WORK,EXPERIENCED:Odoo\n";
 
     assert_eq!(categories.to_content(), expected)
+}
+
+#[test]
+pub fn tel_prop() {
+    let mut tels = TelProperty::new();
+    tels.add(
+        Tel::new()
+            .set_value("+841216214830")
+            .set_prefer(1)
+            .add_type(VCardType::Tel(TelType::CELL))
+            .add_type(VCardType::Base(BaseType::WORK)),
+    );
+
+    tels.add(
+        Tel::new()
+            .set_value("+841218189118")
+            .set_prefer(2)
+            .add_type(VCardType::Tel(TelType::VOICE))
+            .add_type(VCardType::Base(BaseType::HOME)),
+    );
+
+    tels.add(
+        Tel::new(), // Ignore
+    );
+
+    let expected = "\
+    TEL;PREF=1;TYPE=CELL,WORK:+841216214830\n\
+    TEL;PREF=2;TYPE=VOICE,HOME:+841218189118\n";
+
+    assert_eq!(tels.to_content(), expected)
 }

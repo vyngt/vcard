@@ -36,6 +36,7 @@ pub mod nickname;
 pub mod photo;
 pub mod rev;
 pub mod role;
+pub mod tel;
 pub mod title;
 pub mod url;
 
@@ -51,5 +52,6 @@ pub use nickname::NickNameProperty;
 pub use photo::PhotoProperty;
 pub use rev::RevProperty;
 pub use role::RoleProperty;
+pub use tel::TelProperty;
 pub use title::TitleProperty;
 pub use url::URLProperty;
