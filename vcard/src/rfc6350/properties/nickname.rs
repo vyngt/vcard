@@ -13,7 +13,7 @@ impl NickNameProperty {
         }
     }
 
-    pub fn push(&mut self, nickname: NickName) {
+    pub fn add(&mut self, nickname: NickName) {
         self.nicknames.push(nickname);
     }
 }

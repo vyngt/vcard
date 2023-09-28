@@ -10,7 +10,7 @@ impl EmailProperty {
         Self { emails: vec![] }
     }
 
-    pub fn push(&mut self, email: Email) {
+    pub fn add(&mut self, email: Email) {
         self.emails.push(email);
     }
 }

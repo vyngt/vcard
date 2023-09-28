@@ -10,7 +10,7 @@ impl FullNameProperty {
         Self { full_names: vec![] }
     }
 
-    pub fn push(&mut self, full_name: FullName) {
+    pub fn add(&mut self, full_name: FullName) {
         self.full_names.push(full_name);
     }
 }

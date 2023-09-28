@@ -10,7 +10,7 @@ impl LanguageProperty {
         Self { languages: vec![] }
     }
 
-    pub fn push(&mut self, language: Language) {
+    pub fn add(&mut self, language: Language) {
         self.languages.push(language);
     }
 }

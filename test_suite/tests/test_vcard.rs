@@ -20,13 +20,13 @@ fn vcard_required_fn() {
 fn vcard_simple() {
     let mut vc = VCard40::new();
     vc.name.set("Vy", "", "", "", "");
-    vc.nicknames.push(NickName::new()); // Empty
-    vc.full_names.push(
+    vc.nicknames.add(NickName::new()); // Empty
+    vc.full_names.add(
         FullName::new()
             .set_value("Nguyen The Vy")
             .set_language(Some("vi".into())),
     );
-    vc.full_names.push(FullName::new());
+    vc.full_names.add(FullName::new());
 
     let result = vc.generate_vcard();
 
@@ -46,7 +46,7 @@ fn vcard_write_to_file() {
     let pathname_not_exists = "../target/not_exists/simple_vcard.vcf";
     let mut vc = VCard40::new();
     vc.full_names
-        .push(FullName::new().set_value("Nguyen The Vy"));
+        .add(FullName::new().set_value("Nguyen The Vy"));
 
     let expected = "BEGIN:VCARD\n\
     VERSION:4.0\n\
@@ -66,7 +66,7 @@ fn vcard_with_gender() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
 
-    vc.full_names.push(fname);
+    vc.full_names.add(fname);
     vc.gender.set(IGender::Male);
 
     let result = vc.generate_vcard();
@@ -82,15 +82,15 @@ fn vcard_with_urls() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
 
-    vc.full_names.push(fname);
+    vc.full_names.add(fname);
     vc.urls
-        .push(URL::new().set_value("https://github.com/vyngt"));
-    vc.urls.push(
+        .add(URL::new().set_value("https://github.com/vyngt"));
+    vc.urls.add(
         URL::new()
             .set_value("https://leetcode.com/vyngt")
             .add_type(VCardType::XName("Leetcode".into())),
     );
-    vc.urls.push(URL::new()); //Empty
+    vc.urls.add(URL::new()); //Empty
 
     let result = vc.generate_vcard();
 
@@ -110,7 +110,7 @@ fn vcard_with_birthday() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
 
-    vc.full_names.push(fname);
+    vc.full_names.add(fname);
     vc.birthday.set(2000, 4, 3);
 
     let result = vc.generate_vcard();
@@ -127,7 +127,7 @@ fn vcard_with_birthday_error() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
 
-    vc.full_names.push(fname);
+    vc.full_names.add(fname);
     vc.birthday.set(2000, 0, 3);
 
     vc.generate_vcard();
@@ -139,7 +139,7 @@ fn vcard_with_birthday_error_2() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
 
-    vc.full_names.push(fname);
+    vc.full_names.add(fname);
     vc.birthday.set(2000, 13, 35);
 
     vc.generate_vcard();
@@ -150,7 +150,7 @@ fn vcard_with_anniversary() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
 
-    vc.full_names.push(fname);
+    vc.full_names.add(fname);
     vc.anniversary.set(2023, 12, 12);
 
     let result = vc.generate_vcard();
@@ -167,7 +167,7 @@ fn vcard_with_anniversary_error() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
 
-    vc.full_names.push(fname);
+    vc.full_names.add(fname);
     vc.anniversary.set(2000, 0, 3);
 
     vc.generate_vcard();
@@ -179,7 +179,7 @@ fn vcard_with_anniversary_error_2() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
 
-    vc.full_names.push(fname);
+    vc.full_names.add(fname);
     vc.anniversary.set(2000, 13, 35);
 
     vc.generate_vcard();
@@ -189,8 +189,8 @@ fn vcard_with_anniversary_error_2() {
 fn vcard_with_nicknames() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
-    vc.full_names.push(fname);
-    vc.nicknames.push(
+    vc.full_names.add(fname);
+    vc.nicknames.add(
         NickName::new()
             .add_nickname("TheVy")
             .add_nickname("Developer")
@@ -212,8 +212,8 @@ fn vcard_with_nicknames() {
 fn vcard_with_nicknames_language() {
     let mut vc = VCard40::new();
     let fname = FullName::new().set_value("Nguyen The Vy");
-    vc.full_names.push(fname);
-    vc.nicknames.push(
+    vc.full_names.add(fname);
+    vc.nicknames.add(
         NickName::new()
             .add_nickname("TheVy")
             .add_nickname("Developer")
@@ -236,13 +236,13 @@ fn vcard_with_nicknames_language() {
 fn vcard_with_types() {
     let mut vc = VCard40::new();
 
-    vc.full_names.push(
+    vc.full_names.add(
         FullName::new()
             .set_value("Nguyen The Vy")
             .add_type(VCardType::Base(BaseType::HOME))
             .add_type(VCardType::XName("dark".into())),
     );
-    vc.nicknames.push(
+    vc.nicknames.add(
         NickName::new()
             .add_nickname("TheVy")
             .add_nickname("Developer")
@@ -266,7 +266,7 @@ fn vcard_with_types() {
 fn vcard_with_rev_current() {
     let mut vc = VCard40::new();
     vc.full_names
-        .push(FullName::new().set_value("Nguyen The Vy"));
+        .add(FullName::new().set_value("Nguyen The Vy"));
     vc.rev.update_current();
     let result = vc.generate_vcard();
 

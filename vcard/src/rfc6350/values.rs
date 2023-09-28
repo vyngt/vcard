@@ -1,5 +1,6 @@
 pub mod anniversary;
 pub mod birthday;
+pub mod category;
 pub mod email;
 pub mod full_name;
 pub mod gender;
@@ -8,10 +9,13 @@ pub mod name;
 pub mod nickname;
 pub mod photo;
 pub mod rev;
+pub mod role;
+pub mod title;
 pub mod url;
 
 pub use anniversary::Anniversary;
 pub use birthday::Birthday;
+pub use category::Category;
 pub use email::Email;
 pub use full_name::FullName;
 pub use gender::{Gender, IGender};
@@ -20,4 +24,6 @@ pub use name::Name;
 pub use nickname::NickName;
 pub use photo::Photo;
 pub use rev::Rev;
+pub use role::Role;
+pub use title::Title;
 pub use url::URL;

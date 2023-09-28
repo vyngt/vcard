@@ -10,7 +10,7 @@ impl URLProperty {
         Self { urls: vec![] }
     }
 
-    pub fn push(&mut self, url: URL) {
+    pub fn add(&mut self, url: URL) {
         self.urls.push(url);
     }
 }
