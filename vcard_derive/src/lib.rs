@@ -39,8 +39,7 @@ pub fn derive_vcard_body(input: TokenStream) -> TokenStream {
                 }
             }
         }
-        Data::Enum(_s) => panic!("Error type: DataEnum"),
-        Data::Union(_s) => panic!("Error type: DataUnion"),
+        _other => {}
     }
 
     let tokens = quote! {

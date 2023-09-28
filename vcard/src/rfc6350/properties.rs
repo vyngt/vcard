@@ -4,9 +4,7 @@ TODO:
 - PHOTO
 - ADR
 - TEL
-- EMAIL
 - IMPP
-- LANG
 - TZ
 -----------------
 - GEO
@@ -21,7 +19,6 @@ TODO:
 - CATEGORIES
 - NOTE
 - PRODID
-- REV
 - SOUND
 - UID
 - CLIENTPIDMAP
