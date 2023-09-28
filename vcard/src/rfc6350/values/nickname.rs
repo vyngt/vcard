@@ -1,10 +1,10 @@
-use super::super::parameters::{LanguageParam, PrefParam, TypeParam, VCardType};
+use super::super::parameters::{ArrayValueParam, LanguageParam, PrefParam, TypeParam, VCardType};
 use crate::common::{VCardParam, VCardValue};
 use vcard_derive::vcard_property_type;
 
 #[vcard_property_type("NICKNAME")]
 pub struct NickName {
-    values: Vec<String>,
+    value: ArrayValueParam,
     type_param: TypeParam,
     lang_param: LanguageParam,
     pref_param: PrefParam,
@@ -13,7 +13,7 @@ pub struct NickName {
 impl NickName {
     pub fn new() -> Self {
         Self {
-            values: Vec::new(),
+            value: ArrayValueParam::new(),
             type_param: TypeParam::new(),
             lang_param: LanguageParam::new(),
             pref_param: PrefParam::new(),
@@ -21,10 +21,7 @@ impl NickName {
     }
 
     pub fn add_nickname(mut self, nickname: &str) -> Self {
-        let trimmed = nickname.trim();
-        if trimmed.len() > 0 {
-            self.values.push(trimmed.into());
-        }
+        self.value.add(nickname);
         self
     }
 
@@ -47,17 +44,17 @@ impl NickName {
 
 impl VCardValue for NickName {
     fn format_value(&self) -> String {
-        if self.values.len() < 1 {
+        let value = self.value.format_param();
+        if value.len() < 1 {
             "".into()
         } else {
-            let nicknames = self.values.join(",");
             format!(
                 "{}{}{}{}:{}\n",
                 Self::get_value_type(),
                 self.pref_param.format_param(),
                 self.lang_param.format_param(),
                 self.type_param.format_param(),
-                nicknames
+                value,
             )
         }
     }

@@ -1,4 +1,4 @@
-use super::super::parameters::{PrefParam, TypeParam, VCardType};
+use super::super::parameters::{PrefParam, TypeParam, VCardType, ValueParam};
 use crate::common::{VCardParam, VCardValue};
 use vcard_derive::vcard_property_type;
 
@@ -6,7 +6,7 @@ use vcard_derive::vcard_property_type;
 
 #[vcard_property_type("EMAIL")]
 pub struct Email {
-    value: String,
+    value: ValueParam,
     type_param: TypeParam,
     pref_param: PrefParam,
 }
@@ -14,17 +14,14 @@ pub struct Email {
 impl Email {
     pub fn new() -> Self {
         Self {
-            value: String::new(),
+            value: ValueParam::new(),
             type_param: TypeParam::new(),
             pref_param: PrefParam::new(),
         }
     }
 
     pub fn set_value(mut self, email: &str) -> Self {
-        let trimmed = email.trim();
-        if trimmed.len() > 0 {
-            self.value = trimmed.into();
-        }
+        self.value.set(email);
         self
     }
 
@@ -47,13 +44,14 @@ impl Email {
 
 impl VCardValue for Email {
     fn format_value(&self) -> String {
-        if self.value.len() > 0 {
+        let value = self.value.format_param();
+        if value.len() > 0 {
             format!(
                 "{}{}{}:{}\n",
                 Self::get_value_type(),
                 self.pref_param.format_param(),
                 self.type_param.format_param(),
-                self.value
+                value
             )
         } else {
             "".into()

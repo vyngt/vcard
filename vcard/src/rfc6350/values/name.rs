@@ -1,6 +1,7 @@
 use crate::common::VCardValue;
 use vcard_derive::vcard_property_type;
 
+// TODO: Rewrite this
 #[vcard_property_type("N")]
 pub struct Name {
     value: String,
