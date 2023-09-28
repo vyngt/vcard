@@ -1,8 +1,8 @@
 use vcard::common::VCardProperty;
 use vcard::rfc6350::{
     parameters::{BaseType, TelType, VCardType},
-    properties::EmailProperty,
-    values::Email,
+    properties::{EmailProperty, LanguageProperty},
+    values::{Email, Language},
 };
 
 #[test]
@@ -42,4 +42,33 @@ pub fn email_multiple() {
     EMAIL;PREF=1;TYPE=HOME,ALWAYS:ntvy2k@gmail.com\n";
 
     assert_eq!(emails.to_content(), expected)
+}
+
+#[test]
+pub fn lang_prop() {
+    let mut languages = LanguageProperty::new();
+    languages.push(
+        Language::new()
+            .set_value("vi")
+            .add_type(VCardType::Base(BaseType::WORK))
+            .add_type(VCardType::Base(BaseType::HOME))
+            .set_prefer(1),
+    );
+
+    languages.push(
+        Language::new()
+            .set_value("en")
+            .add_type(VCardType::Base(BaseType::WORK))
+            .set_prefer(2),
+    );
+
+    languages.push(
+        Language::new(), // Ignore
+    );
+
+    let expected = "\
+    LANG;PREF=1;TYPE=WORK,HOME:vi\n\
+    LANG;PREF=2;TYPE=WORK:en\n";
+
+    assert_eq!(languages.to_content(), expected)
 }
