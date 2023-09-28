@@ -47,3 +47,9 @@ impl VCard40 {
         }
     }
 }
+
+impl std::fmt::Display for VCard40 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.generate_vcard())
+    }
+}

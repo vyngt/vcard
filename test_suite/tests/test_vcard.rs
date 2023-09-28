@@ -28,7 +28,7 @@ fn vcard_simple() {
     );
     vc.full_names.add(FullName::new());
 
-    let result = vc.generate_vcard();
+    let result = vc.to_string();
 
     assert_eq!(
         result,
