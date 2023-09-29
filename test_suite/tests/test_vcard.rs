@@ -1,7 +1,7 @@
 use regex::Regex;
 use std::fs;
 use vcard::rfc6350::parameters::{BaseType, VCardType};
-use vcard::rfc6350::values::{FullName, IGender, NickName, URL};
+use vcard::rfc6350::values::{FullName, IGender, Name, NickName, URL};
 use vcard::rfc6350::VCard40;
 
 #[test]
@@ -19,7 +19,7 @@ fn vcard_required_fn() {
 #[test]
 fn vcard_simple() {
     let mut vc = VCard40::new();
-    vc.name.set("Vy", "", "", "", "");
+    vc.name.set(Name::new().add_given_name("Vy"));
     vc.nicknames.add(NickName::new()); // Empty
     vc.full_names.add(
         FullName::new()

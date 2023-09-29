@@ -2,11 +2,30 @@ use vcard::common::VCardProperty;
 use vcard::rfc6350::{
     parameters::{BaseType, TelType, VCardType},
     properties::{
-        CategoryProperty, EmailProperty, LanguageProperty, NoteProperty, OrganizationProperty,
-        RoleProperty, TelProperty, TitleProperty,
+        AddressProperty, CategoryProperty, EmailProperty, LanguageProperty, NameProperty,
+        NoteProperty, OrganizationProperty, RoleProperty, TelProperty, TitleProperty,
     },
-    values::{Category, Email, Language, Note, Organization, Role, Tel, Title},
+    values::{Address, Category, Email, Language, Name, Note, Organization, Role, Tel, Title},
 };
+
+#[test]
+pub fn name_property() {
+    let mut name = NameProperty::new();
+
+    name.set(
+        Name::new()
+            .add_family_name("Last")
+            .add_given_name("First")
+            .add_additional_name("Middle")
+            .add_honorific_prefix("Pre.")
+            .add_honorific_suffix("Suf.")
+            .set_language(Some("en".into())),
+    );
+
+    let expected = "N;LANGUAGE=en:Last;First;Middle;Pre.;Suf.\n";
+
+    assert_eq!(name.to_content(), expected);
+}
 
 #[test]
 pub fn email_property() {
@@ -242,4 +261,28 @@ pub fn note_property() {
     NOTE:This is just note\n\
     NOTE;PREF=1;LANGUAGE=en;TYPE=HOME:I love anime, light novel!\n";
     assert_eq!(notes.to_content(), expected)
+}
+
+#[test]
+pub fn address_property() {
+    let mut addresses = AddressProperty::new();
+
+    addresses.add(
+        Address::new()
+            .street("123 Main Street")
+            .locality("Town")
+            .region("Unknown")
+            .code("12344321")
+            .country("Country")
+            .set_prefer(1)
+            .add_type(VCardType::Base(BaseType::HOME)),
+    );
+
+    addresses.add(Address::new().country("Vietnam"));
+    addresses.add(Address::new()); // Ignore
+
+    let expected = "\
+    ADR;PREF=1;TYPE=HOME:;;123 Main Street;Town;Unknown;12344321;Country\n\
+    ADR:;;;;;;Vietnam\n";
+    assert_eq!(addresses.to_content(), expected)
 }

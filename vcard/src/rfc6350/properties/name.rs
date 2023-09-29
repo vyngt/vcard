@@ -10,16 +10,8 @@ impl NameProperty {
         NameProperty { name: Name::new() }
     }
 
-    pub fn set(
-        &mut self,
-        names: &str,
-        sur_names: &str,
-        add_names: &str,
-        prefixes: &str,
-        suffixes: &str,
-    ) {
-        self.name
-            .set(names, sur_names, add_names, prefixes, suffixes);
+    pub fn set(&mut self, name: Name) {
+        self.name = name;
     }
 }
 

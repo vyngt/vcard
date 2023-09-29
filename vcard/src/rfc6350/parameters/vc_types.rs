@@ -111,3 +111,9 @@ impl VCardParam for TypeParam {
         }
     }
 }
+
+impl std::fmt::Display for TypeParam {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.format_param())
+    }
+}
