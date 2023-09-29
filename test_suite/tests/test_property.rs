@@ -2,10 +2,14 @@ use vcard::common::VCardProperty;
 use vcard::rfc6350::{
     parameters::{BaseType, TelType, VCardType},
     properties::{
-        AddressProperty, CategoryProperty, EmailProperty, LanguageProperty, NameProperty,
-        NoteProperty, OrganizationProperty, RoleProperty, TelProperty, TitleProperty,
+        AddressProperty, CategoryProperty, EmailProperty, FullNameProperty, LanguageProperty,
+        NameProperty, NickNameProperty, NoteProperty, OrganizationProperty, RoleProperty,
+        TelProperty, TitleProperty, URLProperty,
     },
-    values::{Address, Category, Email, Language, Name, Note, Organization, Role, Tel, Title},
+    values::{
+        Address, Category, Email, FullName, Language, Name, NickName, Note, Organization, Role,
+        Tel, Title, URL,
+    },
 };
 
 #[test]
@@ -19,12 +23,99 @@ pub fn name_property() {
             .add_additional_name("Middle")
             .add_honorific_prefix("Pre.")
             .add_honorific_suffix("Suf.")
-            .set_language(Some("en".into())),
+            .set_language(Some("en")),
     );
 
     let expected = "N;LANGUAGE=en:Last;First;Middle;Pre.;Suf.\n";
 
     assert_eq!(name.to_content(), expected);
+}
+
+#[test]
+pub fn full_name_property() {
+    let mut full_names = FullNameProperty::new();
+
+    full_names.add(
+        FullName::new()
+            .set_value("Nguyen The Vy")
+            .set_prefer(1)
+            .set_language(Some("vi"))
+            .add_type(VCardType::Base(BaseType::HOME))
+            .add_type(VCardType::Base(BaseType::WORK)),
+    );
+
+    full_names.add(
+        FullName::new()
+            .set_value("Vy Nguyen The")
+            .set_prefer(2)
+            .set_language(Some("en"))
+            .add_type(VCardType::Base(BaseType::WORK)),
+    );
+
+    full_names.add(FullName::new()); //Ignore
+
+    let expected = "\
+    FN;PREF=1;LANGUAGE=vi;TYPE=HOME,WORK:Nguyen The Vy\n\
+    FN;PREF=2;LANGUAGE=en;TYPE=WORK:Vy Nguyen The\n";
+
+    assert_eq!(full_names.to_content(), expected);
+}
+
+#[test]
+pub fn nickname_property() {
+    let mut nicknames = NickNameProperty::new();
+
+    nicknames.add(
+        NickName::new()
+            .add_nickname("TheVy")
+            .add_nickname("Grr")
+            .set_prefer(1)
+            .set_language(None)
+            .add_type(VCardType::XName("Gaming".into())),
+    );
+
+    nicknames.add(
+        NickName::new()
+            .add_nickname("VyNT")
+            .set_prefer(2)
+            .set_language(Some("en"))
+            .add_type(VCardType::Base(BaseType::WORK)),
+    );
+
+    nicknames.add(NickName::new()); //Ignore
+
+    let expected = "\
+    NICKNAME;PREF=1;TYPE=GAMING:TheVy,Grr\n\
+    NICKNAME;PREF=2;LANGUAGE=en;TYPE=WORK:VyNT\n";
+
+    assert_eq!(nicknames.to_content(), expected);
+}
+
+#[test]
+pub fn url_property() {
+    let mut urls = URLProperty::new();
+
+    urls.add(
+        URL::new()
+            .set_value("https://github.com/vyngt")
+            .set_prefer(1)
+            .add_type(VCardType::XName("Github".into())),
+    );
+
+    urls.add(
+        URL::new()
+            .set_value("https://example.com")
+            .set_prefer(2)
+            .add_type(VCardType::Base(BaseType::WORK)),
+    );
+
+    urls.add(URL::new()); //Ignore
+
+    let expected = "\
+    URL;PREF=1;TYPE=GITHUB:https://github.com/vyngt\n\
+    URL;PREF=2;TYPE=WORK:https://example.com\n";
+
+    assert_eq!(urls.to_content(), expected);
 }
 
 #[test]
@@ -104,7 +195,7 @@ pub fn title_property() {
             .add_type(VCardType::Base(BaseType::WORK))
             .add_type(VCardType::XName("crab".into()))
             .set_prefer(1)
-            .set_language(Some("en".into())),
+            .set_language(Some("en")),
     );
 
     titles.add(
@@ -133,7 +224,7 @@ pub fn role_property() {
             .set_value("Backend Developer")
             .add_type(VCardType::Base(BaseType::WORK))
             .add_type(VCardType::XName("dark".into()))
-            .set_language(Some("en".into()))
+            .set_language(Some("en"))
             .set_prefer(1),
     );
 
@@ -226,7 +317,7 @@ pub fn organization_property() {
             .set_value("Dream Company")
             .add_ou("H Division")
             .add_ou("Researcher")
-            .set_language(Some("en".into()))
+            .set_language(Some("en"))
             .set_prefer(1)
             .add_type(VCardType::Base(BaseType::WORK))
             .add_type(VCardType::XName("dream".into())),
@@ -252,7 +343,7 @@ pub fn note_property() {
     notes.add(
         Note::new()
             .set_value("I love anime, light novel!")
-            .set_language(Some("en".into()))
+            .set_language(Some("en"))
             .set_prefer(1)
             .add_type(VCardType::Base(BaseType::HOME)),
     );

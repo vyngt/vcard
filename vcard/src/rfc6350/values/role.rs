@@ -1,5 +1,5 @@
 use super::super::parameters::{LanguageParam, PrefParam, TypeParam, VCardType, ValueParam};
-use crate::common::{VCardParam, VCardValue};
+use crate::common::VCardValue;
 use vcard_derive::vcard_property_type;
 
 #[vcard_property_type("ROLE")]
@@ -25,7 +25,7 @@ impl Role {
         self
     }
 
-    pub fn set_language(mut self, lang: Option<String>) -> Self {
+    pub fn set_language(mut self, lang: Option<&str>) -> Self {
         self.lang_param.set(lang);
         self
     }
@@ -44,14 +44,14 @@ impl Role {
 
 impl VCardValue for Role {
     fn format_value(&self) -> String {
-        let value = self.value.format_param();
+        let value = self.value.to_string();
         if value.len() > 0 {
             format!(
                 "{}{}{}{}:{}\n",
                 Self::get_value_type(),
-                self.lang_param.format_param(),
-                self.pref_param.format_param(),
-                self.type_param.format_param(),
+                self.lang_param,
+                self.pref_param,
+                self.type_param,
                 value
             )
         } else {

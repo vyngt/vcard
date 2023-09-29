@@ -56,7 +56,7 @@ impl Organization {
         self
     }
 
-    pub fn set_language(mut self, lang: Option<String>) -> Self {
+    pub fn set_language(mut self, lang: Option<&str>) -> Self {
         self.lang_param.set(lang);
         self
     }
@@ -76,9 +76,9 @@ impl VCardValue for Organization {
             format!(
                 "{}{}{}{}:{}\n",
                 Self::get_value_type(),
-                self.pref_param.format_param(),
-                self.lang_param.format_param(),
-                self.type_param.format_param(),
+                self.pref_param,
+                self.lang_param,
+                self.type_param,
                 value,
             )
         }

@@ -1,5 +1,5 @@
 use super::super::parameters::{PrefParam, TypeParam, VCardType, ValueParam};
-use crate::common::{VCardParam, VCardValue};
+use crate::common::VCardValue;
 use vcard_derive::vcard_property_type;
 
 #[vcard_property_type("URL")]
@@ -37,13 +37,13 @@ impl URL {
 
 impl VCardValue for URL {
     fn format_value(&self) -> String {
-        let value = self.value.format_param();
+        let value = self.value.to_string();
         if value.len() > 0 {
             format!(
                 "{}{}{}:{}\n",
                 Self::get_value_type(),
-                self.pref_param.format_param(),
-                self.type_param.format_param(),
+                self.pref_param,
+                self.type_param,
                 value
             )
         } else {

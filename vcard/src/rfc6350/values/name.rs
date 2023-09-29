@@ -56,7 +56,7 @@ impl Name {
         self
     }
 
-    pub fn set_language(mut self, lang: Option<String>) -> Self {
+    pub fn set_language(mut self, lang: Option<&str>) -> Self {
         self.lang_param.set(lang);
         self
     }

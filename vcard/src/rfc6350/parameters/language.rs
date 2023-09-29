@@ -12,8 +12,11 @@ impl LanguageParam {
     }
 
     /// TODO: Validate
-    pub fn set(&mut self, lang: Option<String>) {
-        self.value = lang;
+    pub fn set(&mut self, lang: Option<&str>) {
+        match lang {
+            Some(l) => self.value = Some(l.into()),
+            None => self.value = None,
+        }
     }
 }
 
