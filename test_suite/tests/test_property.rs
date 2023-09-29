@@ -2,13 +2,14 @@ use vcard::common::VCardProperty;
 use vcard::rfc6350::{
     parameters::{BaseType, TelType, VCardType},
     properties::{
-        CategoryProperty, EmailProperty, LanguageProperty, RoleProperty, TelProperty, TitleProperty,
+        CategoryProperty, EmailProperty, LanguageProperty, NoteProperty, OrganizationProperty,
+        RoleProperty, TelProperty, TitleProperty,
     },
-    values::{Category, Email, Language, Role, Tel, Title},
+    values::{Category, Email, Language, Note, Organization, Role, Tel, Title},
 };
 
 #[test]
-pub fn email_prop() {
+pub fn email_property() {
     let mut emails = EmailProperty::new();
     emails.add(Email::new().set_value("vyngt@outlook.com"));
 
@@ -47,7 +48,7 @@ pub fn email_multiple() {
 }
 
 #[test]
-pub fn lang_prop() {
+pub fn lang_property() {
     let mut languages = LanguageProperty::new();
     languages.add(
         Language::new()
@@ -76,7 +77,7 @@ pub fn lang_prop() {
 }
 
 #[test]
-pub fn title_prop() {
+pub fn title_property() {
     let mut titles = TitleProperty::new();
     titles.add(
         Title::new()
@@ -106,7 +107,7 @@ pub fn title_prop() {
 }
 
 #[test]
-pub fn role_prop() {
+pub fn role_property() {
     let mut roles = RoleProperty::new();
     roles.add(
         Role::new()
@@ -136,7 +137,7 @@ pub fn role_prop() {
 }
 
 #[test]
-pub fn categories_prop() {
+pub fn categories_property() {
     let mut categories = CategoryProperty::new();
     categories.add(
         Category::new()
@@ -167,7 +168,7 @@ pub fn categories_prop() {
 }
 
 #[test]
-pub fn tel_prop() {
+pub fn tel_property() {
     let mut tels = TelProperty::new();
     tels.add(
         Tel::new()
@@ -194,4 +195,51 @@ pub fn tel_prop() {
     TEL;PREF=2;TYPE=VOICE,HOME:+841218189118\n";
 
     assert_eq!(tels.to_content(), expected)
+}
+
+#[test]
+pub fn organization_property() {
+    let mut orgs = OrganizationProperty::new();
+    orgs.add(Organization::new().set_value("My Company"));
+
+    orgs.add(
+        Organization::new()
+            .set_value("Dream Company")
+            .add_ou("H Division")
+            .add_ou("Researcher")
+            .set_language(Some("en".into()))
+            .set_prefer(1)
+            .add_type(VCardType::Base(BaseType::WORK))
+            .add_type(VCardType::XName("dream".into())),
+    );
+
+    orgs.add(
+        Organization::new(), // Ignore
+    );
+
+    let expected = "\
+    ORG:My Company\n\
+    ORG;PREF=1;LANGUAGE=en;TYPE=WORK,DREAM:Dream Company;H Division;Researcher\n";
+
+    assert_eq!(orgs.to_content(), expected)
+}
+
+#[test]
+pub fn note_property() {
+    let mut notes = NoteProperty::new();
+
+    notes.add(Note::new().set_value("This is just note"));
+    notes.add(Note::new()); // Ignore
+    notes.add(
+        Note::new()
+            .set_value("I love anime, light novel!")
+            .set_language(Some("en".into()))
+            .set_prefer(1)
+            .add_type(VCardType::Base(BaseType::HOME)),
+    );
+
+    let expected = "\
+    NOTE:This is just note\n\
+    NOTE;PREF=1;LANGUAGE=en;TYPE=HOME:I love anime, light novel!\n";
+    assert_eq!(notes.to_content(), expected)
 }

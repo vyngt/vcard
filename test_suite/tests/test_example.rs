@@ -17,20 +17,20 @@ fn example_1() {
     );
 
     vc.gender.set(IGender::Male);
-    vc.email.add(
+    vc.emails.add(
         Email::new()
             .set_value("vyngt@outlook.com")
             .set_prefer(1)
             .add_type(VCardType::Base(BaseType::WORK)),
     );
-    vc.email.add(
+    vc.emails.add(
         Email::new()
             .set_value("ntvy2k@gmail.com")
             .set_prefer(2)
             .add_type(VCardType::Base(BaseType::HOME)),
     );
 
-    vc.language
+    vc.languages
         .add(Language::new().set_prefer(1).set_value("vi"));
     vc.categories.add(
         Category::new()
@@ -45,17 +45,17 @@ fn example_1() {
             .set_value("https://github.com/vyngt")
             .add_type(VCardType::XName("Github".into())),
     );
-    vc.title.add(
+    vc.titles.add(
         Title::new()
             .set_value("Rust Developer")
             .add_type(VCardType::Base(BaseType::HOME)),
     );
-    vc.title.add(
+    vc.titles.add(
         Title::new()
             .set_value("Python Developer")
             .add_type(VCardType::Base(BaseType::WORK)),
     );
-    vc.role.add(Role::new().set_value("Story Teller"));
+    vc.roles.add(Role::new().set_value("Story Teller"));
 
     let expected = "BEGIN:VCARD\n\
     VERSION:4.0\n\
