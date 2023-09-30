@@ -10,12 +10,8 @@ impl PhotoProperty {
         PhotoProperty { photos: vec![] }
     }
 
-    pub fn push(&mut self, photo: Photo) {
+    pub fn add(&mut self, photo: Photo) {
         self.photos.push(photo);
-    }
-
-    pub fn clear(&mut self) {
-        self.photos.clear();
     }
 }
 

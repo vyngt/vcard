@@ -1,14 +1,14 @@
 use vcard::common::VCardProperty;
 use vcard::rfc6350::{
-    parameters::{BaseType, TelType, VCardType},
+    parameters::{media::ImageType, BaseType, TelType, VCardType},
     properties::{
         AddressProperty, CategoryProperty, EmailProperty, FullNameProperty, LanguageProperty,
-        NameProperty, NickNameProperty, NoteProperty, OrganizationProperty, RoleProperty,
-        TelProperty, TitleProperty, URLProperty,
+        NameProperty, NickNameProperty, NoteProperty, OrganizationProperty, PhotoProperty,
+        RoleProperty, TelProperty, TitleProperty, URLProperty,
     },
     values::{
-        Address, Category, Email, FullName, Language, Name, NickName, Note, Organization, Role,
-        Tel, Title, URL,
+        Address, Category, Email, FullName, Language, Name, NickName, Note, Organization, Photo,
+        Role, Tel, Title, URL,
     },
 };
 
@@ -376,4 +376,29 @@ pub fn address_property() {
     ADR;PREF=1;TYPE=HOME:;;123 Main Street;Town;Unknown;12344321;Country\n\
     ADR:;;;;;;Vietnam\n";
     assert_eq!(addresses.to_content(), expected)
+}
+
+#[test]
+pub fn photo_property() {
+    let mut photos = PhotoProperty::new();
+
+    photos.add(Photo::new().set_uri("https://example.com/me.png"));
+    photos.add(Photo::new().set_bytes_data(
+        vec![
+            137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 7, 0, 0, 0, 8,
+            8, 6, 0, 0, 0, 53, 4, 229, 6, 0, 0, 0, 1, 115, 82, 71, 66, 0, 174, 206, 28, 233, 0, 0,
+            0, 4, 103, 65, 77, 65, 0, 0, 177, 143, 11, 252, 97, 5, 0, 0, 0, 9, 112, 72, 89, 115, 0,
+            0, 18, 116, 0, 0, 18, 116, 1, 222, 102, 31, 120, 0, 0, 0, 23, 73, 68, 65, 84, 24, 87,
+            99, 252, 15, 4, 12, 56, 0, 19, 148, 198, 10, 134, 146, 36, 3, 3, 0, 154, 191, 4, 12,
+            196, 31, 139, 39, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130,
+        ],
+        ImageType::PNG,
+    ));
+    photos.add(Photo::new()); // Ignore
+
+    let expected = "\
+    PHOTO:https://example.com/me.png\n\
+    PHOTO:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAICAYAAAA1BOUGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAXSURBVBhXY/wPBAw4ABOUxgqGkiQDAwCavwQMxB+LJwAAAABJRU5ErkJggg\n";
+
+    assert_eq!(photos.to_content(), expected);
 }

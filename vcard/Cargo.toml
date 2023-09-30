@@ -10,6 +10,7 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+base64 = "0.21.4"
 chrono = "0.4.31"
 mime = "0.3.17"
 vcard_derive = {path = "../vcard_derive"}
