@@ -1,8 +1,8 @@
-use vcard::rfc6350::parameters::{BaseType, VCardType};
-use vcard::rfc6350::values::{
+use sp_vcard::rfc6350::parameters::{BaseType, VCardType};
+use sp_vcard::rfc6350::values::{
     Category, Email, FullName, IGender, Language, NickName, Role, Title, URL,
 };
-use vcard::rfc6350::VCard40;
+use sp_vcard::rfc6350::VCard40;
 
 #[test]
 fn example_1() {

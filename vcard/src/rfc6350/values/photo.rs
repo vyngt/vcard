@@ -1,7 +1,7 @@
 use crate::common::VCardValue;
 use crate::rfc6350::parameters::media::ImageType;
 use crate::rfc6350::parameters::ValueOrImageParam;
-use vcard_derive::vcard_property_type;
+use sp_vcard_derive::vcard_property_type;
 
 #[vcard_property_type("PHOTO")]
 pub struct Photo {

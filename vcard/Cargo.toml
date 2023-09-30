@@ -1,11 +1,12 @@
 [package]
-name = "vcard"
+name = "sp_vcard"
 version = "0.1.0"
 authors = ["VyNT <vyngt@outlook.com>"]
 description = "Simple vCard library will help you generate vCard"
 keywords = ["vcard", "rfc6350"]
 edition = "2021"
 license = "MIT"
+repository = "https://github.com/vyngt/vcard"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -13,4 +14,4 @@ license = "MIT"
 base64 = "0.21.4"
 chrono = "0.4.31"
 mime = "0.3.17"
-vcard_derive = {path = "../vcard_derive"}
+sp_vcard_derive = {path = "../vcard_derive"}

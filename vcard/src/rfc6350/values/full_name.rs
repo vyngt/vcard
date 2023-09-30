@@ -1,6 +1,6 @@
 use super::super::parameters::{LanguageParam, PrefParam, TypeParam, VCardType, ValueParam};
 use crate::common::VCardValue;
-use vcard_derive::vcard_property_type;
+use sp_vcard_derive::vcard_property_type;
 
 #[vcard_property_type("FN")]
 pub struct FullName {

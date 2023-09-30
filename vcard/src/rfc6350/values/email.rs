@@ -1,6 +1,6 @@
 use super::super::parameters::{PrefParam, TypeParam, VCardType, ValueParam};
 use crate::common::VCardValue;
-use vcard_derive::vcard_property_type;
+use sp_vcard_derive::vcard_property_type;
 
 // TODO: Validate
 

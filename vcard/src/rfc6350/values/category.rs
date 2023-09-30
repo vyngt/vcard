@@ -1,6 +1,6 @@
 use super::super::parameters::{ArrayValueParam, PrefParam, TypeParam, VCardType};
 use crate::common::VCardValue;
-use vcard_derive::vcard_property_type;
+use sp_vcard_derive::vcard_property_type;
 
 #[vcard_property_type("CATEGORIES")]
 pub struct Category {

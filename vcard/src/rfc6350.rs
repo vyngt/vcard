@@ -13,7 +13,7 @@ use properties::{
     TitleProperty, URLProperty,
 };
 
-#[derive(vcard_derive::VCard)]
+#[derive(sp_vcard_derive::VCard)]
 pub struct VCard40 {
     pub full_names: FullNameProperty,
     pub name: NameProperty,

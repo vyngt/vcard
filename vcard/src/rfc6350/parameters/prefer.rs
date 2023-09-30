@@ -1,5 +1,5 @@
 use crate::common::VCardParam;
-use vcard_derive::vcard_property_type;
+use sp_vcard_derive::vcard_property_type;
 
 #[vcard_property_type("PREF")]
 pub struct PrefParam {

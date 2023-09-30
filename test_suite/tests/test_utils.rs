@@ -1,4 +1,4 @@
-use vcard::utils::DateTimeFormatter;
+use sp_vcard::utils::DateTimeFormatter;
 
 #[test]
 fn date_time_valid() {

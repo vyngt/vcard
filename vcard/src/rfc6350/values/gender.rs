@@ -1,5 +1,5 @@
 use crate::common::VCardValue;
-use vcard_derive::vcard_property_type;
+use sp_vcard_derive::vcard_property_type;
 
 pub enum IGender {
     None,

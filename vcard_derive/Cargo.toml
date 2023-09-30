@@ -1,15 +1,16 @@
 [package]
-name = "vcard_derive"
+name = "sp_vcard_derive"
 version = "0.1.0"
 authors = ["VyNT <vyngt@outlook.com>"]
 description = "Macro helper"
 keywords = ["vcard", "derive"]
 edition = "2021"
 license = "MIT"
+repository = "https://github.com/vyngt/vcard"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
-name = "vcard_derive"
+name = "sp_vcard_derive"
 proc-macro = true
 
 [dependencies]

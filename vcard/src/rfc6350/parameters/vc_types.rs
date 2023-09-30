@@ -1,6 +1,6 @@
 use crate::common::VCardParam;
+use sp_vcard_derive::vcard_property_type;
 use std::fmt;
-use vcard_derive::vcard_property_type;
 
 /// ref: `https://www.rfc-editor.org/rfc/rfc6350#section-5.6`
 #[derive(Debug)]

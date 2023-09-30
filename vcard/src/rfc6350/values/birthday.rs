@@ -1,6 +1,6 @@
 use crate::common::VCardValue;
 use crate::utils::DateTimeFormatter;
-use vcard_derive::vcard_property_type;
+use sp_vcard_derive::vcard_property_type;
 
 #[vcard_property_type("BDAY")]
 pub struct Birthday {

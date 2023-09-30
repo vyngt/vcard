@@ -1,5 +1,5 @@
-use vcard::common::VCardProperty;
-use vcard::rfc6350::{
+use sp_vcard::common::VCardProperty;
+use sp_vcard::rfc6350::{
     parameters::{media::ImageType, BaseType, TelType, VCardType},
     properties::{
         AddressProperty, CategoryProperty, EmailProperty, FullNameProperty, LanguageProperty,

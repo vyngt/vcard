@@ -1,4 +1,4 @@
-use vcard::{
+use sp_vcard::{
     common::VCardParam,
     rfc6350::parameters::{
         media::{AudioType, DataType, ImageType},

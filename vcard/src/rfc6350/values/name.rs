@@ -1,6 +1,6 @@
 use crate::common::VCardValue;
 use crate::rfc6350::parameters::{ArrayValueParam, LanguageParam};
-use vcard_derive::vcard_property_type;
+use sp_vcard_derive::vcard_property_type;
 
 #[vcard_property_type("N")]
 pub struct Name {

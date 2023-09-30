@@ -7,5 +7,5 @@ edition = "2021"
 
 [dependencies]
 regex = "1.9.5"
-vcard = {path = "../vcard"}
-vcard_derive = {path = "../vcard_derive"}
+sp_vcard = {path = "../vcard"}
+sp_vcard_derive = {path = "../vcard_derive"}

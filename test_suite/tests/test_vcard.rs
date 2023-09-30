@@ -1,8 +1,8 @@
 use regex::Regex;
+use sp_vcard::rfc6350::parameters::{BaseType, VCardType};
+use sp_vcard::rfc6350::values::{FullName, IGender, Name, NickName, URL};
+use sp_vcard::rfc6350::VCard40;
 use std::fs;
-use vcard::rfc6350::parameters::{BaseType, VCardType};
-use vcard::rfc6350::values::{FullName, IGender, Name, NickName, URL};
-use vcard::rfc6350::VCard40;
 
 #[test]
 fn vcard_version_4() {

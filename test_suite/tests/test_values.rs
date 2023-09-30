@@ -1,5 +1,5 @@
-use vcard::common::VCardValue;
-use vcard::rfc6350::values::{Gender, IGender};
+use sp_vcard::common::VCardValue;
+use sp_vcard::rfc6350::values::{Gender, IGender};
 
 #[test]
 fn output_gender() {
