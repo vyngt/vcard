@@ -13,5 +13,4 @@ repository = "https://github.com/vyngt/vcard"
 [dependencies]
 base64 = "0.21.4"
 chrono = "0.4.31"
-mime = "0.3.17"
 sp_vcard_derive = {version = "0.1", path = "../vcard_derive"}

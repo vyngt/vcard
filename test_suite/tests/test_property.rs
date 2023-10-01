@@ -1,19 +1,22 @@
 use sp_vcard::common::VCardProperty;
 use sp_vcard::rfc6350::{
-    parameters::{media::ImageType, BaseType, TelType, VCardType},
+    parameters::{
+        media::{AudioType, ImageType},
+        BaseType, TelType, VCardType,
+    },
     properties::{
         AddressProperty, CategoryProperty, EmailProperty, FullNameProperty, LanguageProperty,
-        NameProperty, NickNameProperty, NoteProperty, OrganizationProperty, PhotoProperty,
-        RoleProperty, TelProperty, TitleProperty, URLProperty,
+        LogoProperty, NameProperty, NickNameProperty, NoteProperty, OrganizationProperty,
+        PhotoProperty, RoleProperty, SoundProperty, TelProperty, TitleProperty, URLProperty,
     },
     values::{
-        Address, Category, Email, FullName, Language, Name, NickName, Note, Organization, Photo,
-        Role, Tel, Title, URL,
+        Address, Category, Email, FullName, Language, Logo, Name, NickName, Note, Organization,
+        Photo, Role, Sound, Tel, Title, URL,
     },
 };
 
 #[test]
-pub fn name_property() {
+fn name_property() {
     let mut name = NameProperty::new();
 
     name.set(
@@ -32,7 +35,7 @@ pub fn name_property() {
 }
 
 #[test]
-pub fn full_name_property() {
+fn full_name_property() {
     let mut full_names = FullNameProperty::new();
 
     full_names.add(
@@ -62,7 +65,7 @@ pub fn full_name_property() {
 }
 
 #[test]
-pub fn nickname_property() {
+fn nickname_property() {
     let mut nicknames = NickNameProperty::new();
 
     nicknames.add(
@@ -92,7 +95,7 @@ pub fn nickname_property() {
 }
 
 #[test]
-pub fn url_property() {
+fn url_property() {
     let mut urls = URLProperty::new();
 
     urls.add(
@@ -119,7 +122,7 @@ pub fn url_property() {
 }
 
 #[test]
-pub fn email_property() {
+fn email_property() {
     let mut emails = EmailProperty::new();
     emails.add(Email::new().set_value("vyngt@outlook.com"));
 
@@ -127,7 +130,7 @@ pub fn email_property() {
 }
 
 #[test]
-pub fn email_multiple() {
+fn email_multiple() {
     let mut emails = EmailProperty::new();
     emails.add(
         Email::new()
@@ -158,7 +161,7 @@ pub fn email_multiple() {
 }
 
 #[test]
-pub fn lang_property() {
+fn lang_property() {
     let mut languages = LanguageProperty::new();
     languages.add(
         Language::new()
@@ -187,7 +190,7 @@ pub fn lang_property() {
 }
 
 #[test]
-pub fn title_property() {
+fn title_property() {
     let mut titles = TitleProperty::new();
     titles.add(
         Title::new()
@@ -217,7 +220,7 @@ pub fn title_property() {
 }
 
 #[test]
-pub fn role_property() {
+fn role_property() {
     let mut roles = RoleProperty::new();
     roles.add(
         Role::new()
@@ -247,7 +250,7 @@ pub fn role_property() {
 }
 
 #[test]
-pub fn categories_property() {
+fn categories_property() {
     let mut categories = CategoryProperty::new();
     categories.add(
         Category::new()
@@ -278,7 +281,7 @@ pub fn categories_property() {
 }
 
 #[test]
-pub fn tel_property() {
+fn tel_property() {
     let mut tels = TelProperty::new();
     tels.add(
         Tel::new()
@@ -308,7 +311,7 @@ pub fn tel_property() {
 }
 
 #[test]
-pub fn organization_property() {
+fn organization_property() {
     let mut orgs = OrganizationProperty::new();
     orgs.add(Organization::new().set_value("My Company"));
 
@@ -335,7 +338,7 @@ pub fn organization_property() {
 }
 
 #[test]
-pub fn note_property() {
+fn note_property() {
     let mut notes = NoteProperty::new();
 
     notes.add(Note::new().set_value("This is just note"));
@@ -355,7 +358,7 @@ pub fn note_property() {
 }
 
 #[test]
-pub fn address_property() {
+fn address_property() {
     let mut addresses = AddressProperty::new();
 
     addresses.add(
@@ -379,7 +382,7 @@ pub fn address_property() {
 }
 
 #[test]
-pub fn photo_property() {
+fn photo_property() {
     let mut photos = PhotoProperty::new();
 
     photos.add(Photo::new().set_uri("https://example.com/me.png"));
@@ -401,4 +404,51 @@ pub fn photo_property() {
     PHOTO:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAICAYAAAA1BOUGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAXSURBVBhXY/wPBAw4ABOUxgqGkiQDAwCavwQMxB+LJwAAAABJRU5ErkJggg\n";
 
     assert_eq!(photos.to_content(), expected);
+}
+
+#[test]
+fn logo_property() {
+    let mut logos = LogoProperty::new();
+
+    logos.add(Logo::new().set_uri("https://example.com/me.png"));
+    logos.add(Logo::new().set_bytes_data(
+        vec![
+            137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 7, 0, 0, 0, 8,
+            8, 6, 0, 0, 0, 53, 4, 229, 6, 0, 0, 0, 1, 115, 82, 71, 66, 0, 174, 206, 28, 233, 0, 0,
+            0, 4, 103, 65, 77, 65, 0, 0, 177, 143, 11, 252, 97, 5, 0, 0, 0, 9, 112, 72, 89, 115, 0,
+            0, 18, 116, 0, 0, 18, 116, 1, 222, 102, 31, 120, 0, 0, 0, 23, 73, 68, 65, 84, 24, 87,
+            99, 252, 15, 4, 12, 56, 0, 19, 148, 198, 10, 134, 146, 36, 3, 3, 0, 154, 191, 4, 12,
+            196, 31, 139, 39, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130,
+        ],
+        ImageType::PNG,
+    ));
+    logos.add(Logo::new()); // Ignore
+
+    let expected = "\
+    LOGO:https://example.com/me.png\n\
+    LOGO:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAICAYAAAA1BOUGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAXSURBVBhXY/wPBAw4ABOUxgqGkiQDAwCavwQMxB+LJwAAAABJRU5ErkJggg\n";
+
+    assert_eq!(logos.to_content(), expected);
+}
+
+#[test]
+fn sound_property() {
+    let mut sounds = SoundProperty::new();
+
+    // blah blah blah...
+    let sound_stream = vec![
+        255, 243, 228, 100, 0, 32, 209, 110, 182, 0, 173, 224, 0, 151, 208, 105, 216, 23, 76, 8, 0,
+        62, 45, 35, 180, 134, 3, 76, 25, 155, 153, 209, 226, 158, 239, 73, 245, 239, 158, 77, 73,
+        191, 164, 153, 160, 113, 134, 15, 25, 162, 97, 179, 63, 28, 165, 65, 220, 95, 29, 197, 33,
+        189, 24, 24, 250, 249, 225, 106, 30, 198, 49, 214, 70, 27,
+    ];
+
+    sounds.add(Sound::new().set_uri("https://example.com/my_sound.mp3"));
+    sounds.add(Sound::new().set_bytes_data(sound_stream, AudioType::BASIC));
+    sounds.add(Sound::new()); // Ignore
+
+    let expected = "\
+    SOUND:https://example.com/my_sound.mp3\n\
+    SOUND:data:audio/basic;base64,//PkZAAg0W62AK3gAJfQadgXTAgAPi0jtIYDTBmbmdHinu9J9e+eTUm/pJmgcYYPGaJhsz8cpUHcXx3FIb0YGPr54WoexjHWRhs\n";
+    assert_eq!(sounds.to_content(), expected);
 }
