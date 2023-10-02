@@ -1,6 +1,8 @@
 use super::super::values::Address;
 use crate::common::{VCardProperty, VCardValue};
 
+/// # Address
+/// ref: `https://datatracker.ietf.org/doc/html/rfc6350#section-6.3.1`
 pub struct AddressProperty {
     addresses: Vec<Address>,
 }

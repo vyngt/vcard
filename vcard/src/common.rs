@@ -3,9 +3,11 @@ pub trait VCardProperty {
 }
 
 pub trait VCardValue {
+    /// Format vCard value
     fn format_value(&self) -> String;
 }
 
 pub trait VCardParam {
+    /// Format vCard parameter
     fn format_param(&self) -> String;
 }

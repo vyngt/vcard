@@ -1,6 +1,9 @@
 use super::super::values::Tel;
 use crate::common::{VCardProperty, VCardValue};
 
+/// # Tel
+/// To specify the telephone number for telephony communication
+/// with the object the vCard represents.
 pub struct TelProperty {
     tels: Vec<Tel>,
 }
