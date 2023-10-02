@@ -7,11 +7,12 @@ use sp_vcard::rfc6350::{
     properties::{
         AddressProperty, CategoryProperty, EmailProperty, FullNameProperty, LanguageProperty,
         LogoProperty, NameProperty, NickNameProperty, NoteProperty, OrganizationProperty,
-        PhotoProperty, RoleProperty, SoundProperty, TelProperty, TitleProperty, URLProperty,
+        PhotoProperty, RoleProperty, SoundProperty, SourceProperty, TelProperty, TitleProperty,
+        URLProperty,
     },
     values::{
         Address, Category, Email, FullName, Language, Logo, Name, NickName, Note, Organization,
-        Photo, Role, Sound, Tel, Title, URL,
+        Photo, Role, Sound, Source, Tel, Title, URL,
     },
 };
 
@@ -450,4 +451,26 @@ fn sound_property() {
     SOUND:https://example.com/my_sound.mp3\n\
     SOUND:data:audio/basic;base64,//PkZAAg0W62AK3gAJfQadgXTAgAPi0jtIYDTBmbmdHinu9J9e+eTUm/pJmgcYYPGaJhsz8cpUHcXx3FIb0YGPr54WoexjHWRhs\n";
     assert_eq!(sounds.to_content(), expected);
+}
+
+#[test]
+fn source_property() {
+    let mut sources = SourceProperty::new();
+
+    sources.add(
+        Source::new()
+            .set_prefer(1)
+            .set_value("https://example.com/contacts/vynt.vcf"),
+    );
+    sources.add(
+        Source::new().set_value("ldap://ldap.example.com/cn=Babs%20Jensen,%20o=Babsco,%20c=US"),
+    );
+
+    sources.add(Source::new()); // Ignore
+
+    let expected = "\
+    SOURCE;PREF=1:https://example.com/contacts/vynt.vcf\n\
+    SOURCE:ldap://ldap.example.com/cn=Babs%20Jensen,%20o=Babsco,%20c=US\n";
+
+    assert_eq!(sources.to_content(), expected);
 }

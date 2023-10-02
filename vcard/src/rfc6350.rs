@@ -10,7 +10,7 @@ use properties::{
     AddressProperty, AnniversaryProperty, BirthdayProperty, CategoryProperty, EmailProperty,
     FullNameProperty, GenderProperty, LanguageProperty, LogoProperty, NameProperty,
     NickNameProperty, NoteProperty, OrganizationProperty, PhotoProperty, RevProperty, RoleProperty,
-    SoundProperty, TelProperty, TitleProperty, URLProperty,
+    SoundProperty, SourceProperty, TelProperty, TitleProperty, URLProperty,
 };
 
 #[derive(sp_vcard_derive::VCard)]
@@ -36,6 +36,7 @@ pub struct VCard40 {
     pub rev: RevProperty,
     pub sounds: SoundProperty,
     pub urls: URLProperty,
+    pub sources: SourceProperty,
 }
 
 impl VCard40 {
