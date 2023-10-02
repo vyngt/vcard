@@ -1,5 +1,5 @@
 use regex::Regex;
-use sp_vcard::rfc6350::parameters::{BaseType, VCardType};
+use sp_vcard::rfc6350::parameters::BaseType;
 use sp_vcard::rfc6350::values::{FullName, IGender, Name, NickName, URL};
 use sp_vcard::rfc6350::VCard40;
 use std::fs;
@@ -88,7 +88,7 @@ fn vcard_with_urls() {
     vc.urls.add(
         URL::new()
             .set_value("https://leetcode.com/vyngt")
-            .add_type(VCardType::XName("Leetcode".into())),
+            .add_x_type("Leetcode"),
     );
     vc.urls.add(URL::new()); //Empty
 
@@ -239,16 +239,16 @@ fn vcard_with_types() {
     vc.full_names.add(
         FullName::new()
             .set_value("Nguyen The Vy")
-            .add_type(VCardType::Base(BaseType::HOME))
-            .add_type(VCardType::XName("dark".into())),
+            .add_base_type(BaseType::HOME)
+            .add_x_type("dark"),
     );
     vc.nicknames.add(
         NickName::new()
             .add_nickname("TheVy")
             .add_nickname("Developer")
             .add_nickname("")
-            .add_type(VCardType::Base(BaseType::HOME))
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::HOME)
+            .add_base_type(BaseType::WORK),
     );
     let result = vc.generate_vcard();
 

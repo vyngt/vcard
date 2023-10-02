@@ -1,8 +1,9 @@
-use super::super::parameters::{LanguageParam, PrefParam, TypeParam, VCardType, ValueParam};
+use super::super::parameters::{LanguageParam, PrefParam, TypeParam, ValueParam};
 use crate::common::VCardValue;
-use sp_vcard_derive::vcard_property_type;
+use sp_vcard_derive::{vcard_property_type, CommonTypeParamMixin};
 
 #[vcard_property_type("TITLE")]
+#[derive(CommonTypeParamMixin)]
 pub struct Title {
     value: ValueParam,
     lang_param: LanguageParam,
@@ -27,12 +28,6 @@ impl Title {
 
     pub fn set_language(mut self, lang: Option<&str>) -> Self {
         self.lang_param.set(lang);
-        self
-    }
-
-    pub fn add_type(mut self, vc_type: VCardType) -> Self {
-        let tp: TypeParam = self.type_param;
-        self.type_param = tp.add(vc_type);
         self
     }
 

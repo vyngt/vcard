@@ -1,6 +1,6 @@
 [package]
 name = "sp_vcard"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["VyNT <vyngt@outlook.com>"]
 description = "Simple vCard library will help you generate vCard"
 keywords = ["vcard", "rfc6350"]
@@ -13,4 +13,4 @@ repository = "https://github.com/vyngt/vcard"
 [dependencies]
 base64 = "0.21.4"
 chrono = "0.4.31"
-sp_vcard_derive = {version = "0.1", path = "../vcard_derive"}
+sp_vcard_derive = {version = "0", path = "../vcard_derive"}

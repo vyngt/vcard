@@ -2,7 +2,7 @@ use sp_vcard::common::VCardProperty;
 use sp_vcard::rfc6350::{
     parameters::{
         media::{AudioType, ImageType},
-        BaseType, TelType, VCardType,
+        BaseType, TelType,
     },
     properties::{
         AddressProperty, CategoryProperty, EmailProperty, FullNameProperty, LanguageProperty,
@@ -43,8 +43,8 @@ fn full_name_property() {
             .set_value("Nguyen The Vy")
             .set_prefer(1)
             .set_language(Some("vi"))
-            .add_type(VCardType::Base(BaseType::HOME))
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::HOME)
+            .add_base_type(BaseType::WORK),
     );
 
     full_names.add(
@@ -52,7 +52,7 @@ fn full_name_property() {
             .set_value("Vy Nguyen The")
             .set_prefer(2)
             .set_language(Some("en"))
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::WORK),
     );
 
     full_names.add(FullName::new()); //Ignore
@@ -74,7 +74,7 @@ fn nickname_property() {
             .add_nickname("Grr")
             .set_prefer(1)
             .set_language(None)
-            .add_type(VCardType::XName("Gaming".into())),
+            .add_x_type("Gaming"),
     );
 
     nicknames.add(
@@ -82,7 +82,7 @@ fn nickname_property() {
             .add_nickname("VyNT")
             .set_prefer(2)
             .set_language(Some("en"))
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::WORK),
     );
 
     nicknames.add(NickName::new()); //Ignore
@@ -102,14 +102,14 @@ fn url_property() {
         URL::new()
             .set_value("https://github.com/vyngt")
             .set_prefer(1)
-            .add_type(VCardType::XName("Github".into())),
+            .add_x_type("Github"),
     );
 
     urls.add(
         URL::new()
             .set_value("https://example.com")
             .set_prefer(2)
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::WORK),
     );
 
     urls.add(URL::new()); //Ignore
@@ -135,22 +135,21 @@ fn email_multiple() {
     emails.add(
         Email::new()
             .set_value("vyngt@outlook.com")
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::WORK),
     );
 
     emails.add(
         Email::new()
             .set_value("ntvy2k@gmail.com")
-            .add_type(VCardType::Base(BaseType::HOME))
-            .add_type(VCardType::XName("always".into()))
-            .add_type(VCardType::Tel(TelType::CELL)) // Invalid, ignore
+            .add_base_type(BaseType::HOME)
+            .add_x_type("always")
             .set_prefer(1),
     );
 
     emails.add(
         Email::new()
             .set_value("") // Empty, then ignore
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::WORK),
     );
 
     let expected = "\
@@ -166,15 +165,15 @@ fn lang_property() {
     languages.add(
         Language::new()
             .set_value("vi")
-            .add_type(VCardType::Base(BaseType::WORK))
-            .add_type(VCardType::Base(BaseType::HOME))
+            .add_base_type(BaseType::WORK)
+            .add_base_type(BaseType::HOME)
             .set_prefer(1),
     );
 
     languages.add(
         Language::new()
             .set_value("en")
-            .add_type(VCardType::Base(BaseType::WORK))
+            .add_base_type(BaseType::WORK)
             .set_prefer(2),
     );
 
@@ -195,8 +194,8 @@ fn title_property() {
     titles.add(
         Title::new()
             .set_value("Rustacean")
-            .add_type(VCardType::Base(BaseType::WORK))
-            .add_type(VCardType::XName("crab".into()))
+            .add_base_type(BaseType::WORK)
+            .add_x_type("crab")
             .set_prefer(1)
             .set_language(Some("en")),
     );
@@ -204,7 +203,7 @@ fn title_property() {
     titles.add(
         Title::new()
             .set_value("Pythonic")
-            .add_type(VCardType::Base(BaseType::WORK))
+            .add_base_type(BaseType::WORK)
             .set_prefer(2),
     );
 
@@ -225,8 +224,8 @@ fn role_property() {
     roles.add(
         Role::new()
             .set_value("Backend Developer")
-            .add_type(VCardType::Base(BaseType::WORK))
-            .add_type(VCardType::XName("dark".into()))
+            .add_base_type(BaseType::WORK)
+            .add_x_type("dark")
             .set_language(Some("en"))
             .set_prefer(1),
     );
@@ -234,7 +233,7 @@ fn role_property() {
     roles.add(
         Role::new()
             .set_value("Odoo Developer")
-            .add_type(VCardType::Base(BaseType::WORK))
+            .add_base_type(BaseType::WORK)
             .set_prefer(10),
     );
 
@@ -257,15 +256,15 @@ fn categories_property() {
             .add_category("Rust")
             .add_category("Python")
             .add_category("Javascript")
-            .add_type(VCardType::XName("Favorite".into()))
+            .add_x_type("Favorite")
             .set_prefer(1),
     );
 
     categories.add(
         Category::new()
             .add_category("Odoo")
-            .add_type(VCardType::Base(BaseType::WORK))
-            .add_type(VCardType::XName("Experienced".into()))
+            .add_base_type(BaseType::WORK)
+            .add_x_type("Experienced")
             .set_prefer(50),
     );
 
@@ -287,16 +286,16 @@ fn tel_property() {
         Tel::new()
             .set_value("+841216214830")
             .set_prefer(1)
-            .add_type(VCardType::Tel(TelType::CELL))
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_tel_type(TelType::CELL)
+            .add_base_type(BaseType::WORK),
     );
 
     tels.add(
         Tel::new()
             .set_value("+841218189118")
             .set_prefer(2)
-            .add_type(VCardType::Tel(TelType::VOICE))
-            .add_type(VCardType::Base(BaseType::HOME)),
+            .add_tel_type(TelType::VOICE)
+            .add_base_type(BaseType::HOME),
     );
 
     tels.add(
@@ -322,8 +321,8 @@ fn organization_property() {
             .add_ou("Researcher")
             .set_language(Some("en"))
             .set_prefer(1)
-            .add_type(VCardType::Base(BaseType::WORK))
-            .add_type(VCardType::XName("dream".into())),
+            .add_base_type(BaseType::WORK)
+            .add_x_type("dream"),
     );
 
     orgs.add(
@@ -348,7 +347,7 @@ fn note_property() {
             .set_value("I love anime, light novel!")
             .set_language(Some("en"))
             .set_prefer(1)
-            .add_type(VCardType::Base(BaseType::HOME)),
+            .add_base_type(BaseType::HOME),
     );
 
     let expected = "\
@@ -369,7 +368,7 @@ fn address_property() {
             .code("12344321")
             .country("Country")
             .set_prefer(1)
-            .add_type(VCardType::Base(BaseType::HOME)),
+            .add_base_type(BaseType::HOME),
     );
 
     addresses.add(Address::new().country("Vietnam"));

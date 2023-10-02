@@ -1,8 +1,9 @@
-use super::super::parameters::{ArrayValueParam, PrefParam, TypeParam, VCardType};
+use super::super::parameters::{ArrayValueParam, PrefParam, TypeParam};
 use crate::common::VCardValue;
-use sp_vcard_derive::vcard_property_type;
+use sp_vcard_derive::{vcard_property_type, CommonTypeParamMixin};
 
 #[vcard_property_type("CATEGORIES")]
+#[derive(CommonTypeParamMixin)]
 pub struct Category {
     value: ArrayValueParam,
     type_param: TypeParam,
@@ -20,12 +21,6 @@ impl Category {
 
     pub fn add_category(mut self, category: &str) -> Self {
         self.value.add(category);
-        self
-    }
-
-    pub fn add_type(mut self, vc_type: VCardType) -> Self {
-        let tp: TypeParam = self.type_param;
-        self.type_param = tp.add(vc_type);
         self
     }
 

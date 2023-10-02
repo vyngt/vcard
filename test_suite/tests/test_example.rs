@@ -1,4 +1,4 @@
-use sp_vcard::rfc6350::parameters::{BaseType, VCardType};
+use sp_vcard::rfc6350::parameters::BaseType;
 use sp_vcard::rfc6350::values::{
     Category, Email, FullName, IGender, Language, NickName, Role, Title, URL,
 };
@@ -12,8 +12,8 @@ fn example_1() {
         FullName::new()
             .set_value("Nguyen The Vy")
             .set_language(Some("vi".into()))
-            .add_type(VCardType::Base(BaseType::HOME))
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::HOME)
+            .add_base_type(BaseType::WORK),
     );
 
     vc.gender.set(IGender::Male);
@@ -21,13 +21,13 @@ fn example_1() {
         Email::new()
             .set_value("vyngt@outlook.com")
             .set_prefer(1)
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::WORK),
     );
     vc.emails.add(
         Email::new()
             .set_value("ntvy2k@gmail.com")
             .set_prefer(2)
-            .add_type(VCardType::Base(BaseType::HOME)),
+            .add_base_type(BaseType::HOME),
     );
 
     vc.languages
@@ -43,17 +43,17 @@ fn example_1() {
     vc.urls.add(
         URL::new()
             .set_value("https://github.com/vyngt")
-            .add_type(VCardType::XName("Github".into())),
+            .add_x_type("Github"),
     );
     vc.titles.add(
         Title::new()
             .set_value("Rust Developer")
-            .add_type(VCardType::Base(BaseType::HOME)),
+            .add_base_type(BaseType::HOME),
     );
     vc.titles.add(
         Title::new()
             .set_value("Python Developer")
-            .add_type(VCardType::Base(BaseType::WORK)),
+            .add_base_type(BaseType::WORK),
     );
     vc.roles.add(Role::new().set_value("Story Teller"));
 

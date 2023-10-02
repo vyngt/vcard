@@ -1,8 +1,9 @@
-use super::super::parameters::{LanguageParam, PrefParam, TypeParam, VCardType, ValueParam};
+use super::super::parameters::{LanguageParam, PrefParam, TypeParam, ValueParam};
 use crate::common::{VCardParam, VCardValue};
-use sp_vcard_derive::vcard_property_type;
+use sp_vcard_derive::{vcard_property_type, CommonTypeParamMixin};
 
 #[vcard_property_type("ORG")]
+#[derive(CommonTypeParamMixin)]
 pub struct Organization {
     value: ValueParam,
     ou: Vec<String>,
@@ -48,12 +49,6 @@ impl Organization {
         } else {
             value_str
         }
-    }
-
-    pub fn add_type(mut self, vc_type: VCardType) -> Self {
-        let tp: TypeParam = self.type_param;
-        self.type_param = tp.add(vc_type);
-        self
     }
 
     pub fn set_language(mut self, lang: Option<&str>) -> Self {

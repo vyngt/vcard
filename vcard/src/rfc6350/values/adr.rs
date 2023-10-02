@@ -1,8 +1,9 @@
-use super::super::parameters::{PrefParam, TypeParam, VCardType, ValueParam};
+use super::super::parameters::{PrefParam, TypeParam, ValueParam};
 use crate::common::VCardValue;
-use sp_vcard_derive::vcard_property_type;
+use sp_vcard_derive::{vcard_property_type, CommonTypeParamMixin};
 
 #[vcard_property_type("ADR")]
+#[derive(CommonTypeParamMixin)]
 pub struct Address {
     street: ValueParam,
     locality: ValueParam,
@@ -58,12 +59,6 @@ impl Address {
     /// e.g., Vietnam, U.S.A
     pub fn country(mut self, country: &str) -> Self {
         self.country.set(country);
-        self
-    }
-
-    pub fn add_type(mut self, vc_type: VCardType) -> Self {
-        let tp: TypeParam = self.type_param;
-        self.type_param = tp.add(vc_type);
         self
     }
 

@@ -1,6 +1,6 @@
 [package]
 name = "sp_vcard_derive"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["VyNT <vyngt@outlook.com>"]
 description = "just macro for sp_vcard"
 keywords = ["vcard", "derive"]

@@ -1,10 +1,11 @@
-use super::super::parameters::{PrefParam, TypeParam, VCardType, ValueParam};
+use super::super::parameters::{PrefParam, TypeParam, ValueParam};
 use crate::common::VCardValue;
-use sp_vcard_derive::vcard_property_type;
+use sp_vcard_derive::{vcard_property_type, CommonTypeParamMixin};
 
 // TODO: Validate
 
 #[vcard_property_type("EMAIL")]
+#[derive(CommonTypeParamMixin)]
 pub struct Email {
     value: ValueParam,
     type_param: TypeParam,
@@ -23,17 +24,6 @@ impl Email {
     pub fn set_value(mut self, email: &str) -> Self {
         self.value.set(email);
         self
-    }
-
-    pub fn add_type(mut self, vc_type: VCardType) -> Self {
-        match vc_type {
-            VCardType::Tel(_) => self,
-            other => {
-                let tp: TypeParam = self.type_param;
-                self.type_param = tp.add(other);
-                self
-            }
-        }
     }
 
     pub fn set_prefer(mut self, preferred: u8) -> Self {

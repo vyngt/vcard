@@ -1,8 +1,9 @@
-use super::super::parameters::{ArrayValueParam, LanguageParam, PrefParam, TypeParam, VCardType};
+use super::super::parameters::{ArrayValueParam, LanguageParam, PrefParam, TypeParam};
 use crate::common::VCardValue;
-use sp_vcard_derive::vcard_property_type;
+use sp_vcard_derive::{vcard_property_type, CommonTypeParamMixin};
 
 #[vcard_property_type("NICKNAME")]
+#[derive(CommonTypeParamMixin)]
 pub struct NickName {
     value: ArrayValueParam,
     type_param: TypeParam,
@@ -22,12 +23,6 @@ impl NickName {
 
     pub fn add_nickname(mut self, nickname: &str) -> Self {
         self.value.add(nickname);
-        self
-    }
-
-    pub fn add_type(mut self, vc_type: VCardType) -> Self {
-        let tp: TypeParam = self.type_param;
-        self.type_param = tp.add(vc_type);
         self
     }
 

@@ -90,3 +90,27 @@ pub fn vcard_property_type(meta: TokenStream, item: TokenStream) -> TokenStream 
 
     proc_macro::TokenStream::from(output)
 }
+
+#[proc_macro_derive(CommonTypeParamMixin)]
+pub fn derive_common_type_param_mixin(input: TokenStream) -> TokenStream {
+    let parsed_input: DeriveInput = parse_macro_input!(input);
+    let struct_name = parsed_input.ident;
+
+    let tokens = quote! {
+        impl #struct_name {
+            pub fn add_base_type(mut self, base: crate::rfc6350::parameters::vc_types::BaseType) -> Self {
+                let tp = self.type_param;
+                self.type_param = tp.add_base(base);
+                self
+            }
+
+            pub fn add_x_type(mut self, x_name: &str) -> Self {
+                let tp = self.type_param;
+                self.type_param = tp.add_x_name(x_name);
+                self
+            }
+        }
+    };
+
+    proc_macro::TokenStream::from(tokens)
+}
