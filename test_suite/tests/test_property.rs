@@ -8,11 +8,11 @@ use sp_vcard::rfc6350::{
         AddressProperty, CategoryProperty, EmailProperty, FullNameProperty, LanguageProperty,
         LogoProperty, NameProperty, NickNameProperty, NoteProperty, OrganizationProperty,
         PhotoProperty, RoleProperty, SoundProperty, SourceProperty, TelProperty, TitleProperty,
-        URLProperty,
+        URLProperty, XProperty,
     },
     values::{
         Address, Category, Email, FullName, Language, Logo, Name, NickName, Note, Organization,
-        Photo, Role, Sound, Source, Tel, Title, URL,
+        Photo, Role, Sound, Source, Tel, Title, URL, X,
     },
 };
 
@@ -473,4 +473,27 @@ fn source_property() {
     SOURCE:ldap://ldap.example.com/cn=Babs%20Jensen,%20o=Babsco,%20c=US\n";
 
     assert_eq!(sources.to_content(), expected);
+}
+
+#[test]
+fn x_property() {
+    let mut xs = XProperty::new();
+
+    xs.add(
+        X::new()
+            .property_name("personal-website")
+            .value("https:://personal.me")
+            .add_base_type(BaseType::HOME)
+            .add_x_type("personal")
+            .set_prefer(1)
+            .set_language(Some("en".into())),
+    );
+
+    xs.add(X::new().property_name("Nothing"));
+    xs.add(X::new().value("Ignore me"));
+
+    let expected = "\
+    X-PERSONAL-WEBSITE;LANGUAGE=en;PREF=1;TYPE=HOME,PERSONAL:https:://personal.me\n";
+
+    assert_eq!(xs.to_content(), expected);
 }

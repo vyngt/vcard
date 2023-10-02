@@ -19,6 +19,7 @@ pub mod source;
 pub mod tel;
 pub mod title;
 pub mod url;
+pub mod x;
 
 pub use adr::Address;
 pub use anniversary::Anniversary;
@@ -41,3 +42,4 @@ pub use source::Source;
 pub use tel::Tel;
 pub use title::Title;
 pub use url::URL;
+pub use x::X;

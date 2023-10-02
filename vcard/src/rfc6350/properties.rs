@@ -38,6 +38,7 @@ pub mod source;
 pub mod tel;
 pub mod title;
 pub mod url;
+pub mod x;
 
 pub use adr::AddressProperty;
 pub use anniversary::AnniversaryProperty;
@@ -60,3 +61,4 @@ pub use source::SourceProperty;
 pub use tel::TelProperty;
 pub use title::TitleProperty;
 pub use url::URLProperty;
+pub use x::XProperty;
